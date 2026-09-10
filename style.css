@@ -1,0 +1,749 @@
+/* GLOBAL STYLES & RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #111116;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* --- EMERGENCY FIX FOR OUT-OF-BOUND TEXT & FOOTER --- */
+.ultimate-golden-frame {
+    width: 100% !important;
+    max-width: 1150px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+.main-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+/* Footer aur saare text elements ko box ke andar lock karne ke liye */
+.site-footer, .footer-bottom, .pixel-board-section, .top-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+}
+
+.footer-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 5px !important;
+}
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2px 0;
+}
+
+.site-title {
+    font-size: 30px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.gold-text {
+    color: #f3c258;
+}
+
+.site-tagline {
+    font-size: 30.5px;
+    color: #bbbbbb;
+    font-weight: 600;
+    margin-top: 1px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 800;
+}
+
+    .nav-link.active {
+        color: #f3c258;
+    }
+
+/* PREMIUM BOARD SECTION */
+.premium-board-section {
+    border: 10px solid #ffea75;
+    border-radius: 100px;
+    padding: 30px;
+    background: #15151a;
+    box-shadow: 0 0 100px rgba(255, 221, 85, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.1);
+    position: relative;
+}
+
+.premium-grid {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.left-panel {
+    width: 350px;
+    height: 300px;
+    border: 1.5px solid #7a5c1e;
+    border-radius: 8px;
+    padding: 14px 12px;
+    background: #121116;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: inset 0 0 10px rgb(255, 227, 9);
+    flex-shrink: 0;
+}
+
+.crown-badge {
+    font-size: 25px;
+    font-weight: 900;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ffd700;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: rgba(243, 194, 88, 0.2);
+    color: #ffd700;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.price-block {
+    margin: 4px 0;
+}
+
+.sub-label {
+    font-size: 20px;
+    color: #aaaaaa;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+.main-price {
+    font-size: 39px;
+    color: #f3c258;
+    font-weight: 900;
+    margin: 2px 0;
+    line-height: 1.1;
+}
+
+.currency-price {
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 4px 0;
+}
+
+    .features-list li {
+        font-size: 15px;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 800;
+    }
+
+.check-icon {
+    width: 14px;
+    height: 14px;
+    background: #f3c258;
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8.5px;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.btn-buy-gold {
+    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%);
+    border: 1.5px solid #fff5cf;
+    padding: 10px 8px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #000000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+    .btn-buy-gold:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(255, 215, 0, 0.7);
+    }
+
+.right-pillars-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* SPOTLIGHTS */
+.spotlights-container {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.spotlight {
+    background: linear-gradient(180deg, rgba(255, 235, 130, 0.95) 0%, rgba(212, 175, 55, 0.35) 60%, transparent 100%);
+    clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+    filter: drop-shadow(0 0 1px rgb(255, 197, 7));
+}
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    z-index: 2;
+    margin-top: 24px;
+}
+
+/* --- 3D Flip Card & VIP Badge CSS --- */
+.pillar-3d {
+    perspective: 1000px;
+    background: transparent !important;
+    border: none !important;
+    height: 225px;
+    position: relative;
+}
+
+.pillar-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.pillar-3d.flipped .pillar-card-inner {
+    transform: rotateY(180deg);
+}
+
+.pillar-front, .pillar-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.pillar-front {
+    background: linear-gradient(135deg, rgba(255, 230, 120, 0.95) 0%, rgba(212, 175, 55, 0.9) 50%, rgba(170, 115, 20, 0.95) 100%);
+    border: 2px solid #FFF1B0;
+    color: #fff;
+}
+
+.pillar-back {
+    background: linear-gradient(135deg, #111, #222);
+    border: 2px solid #00ffcc;
+    color: #fff;
+    transform: rotateY(180deg);
+}
+
+/* Unbought State (Seat Khali / Normal Card Inside Front) */
+.pillar-front.unbought {
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(16, 15, 20, 0.9) 100%);
+    border: 2px solid #ffd700;
+}
+
+    .pillar-front.unbought .center-num {
+        font-size: 34px;
+        font-weight: 900;
+        color: #ffd700;
+        line-height: 1;
+        background: rgba(0, 0, 0, 0.6);
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid rgba(255, 215, 0, 0.7);
+        box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.4), 0 4px 10px rgba(0,0,0,0.5);
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+
+    .pillar-front.unbought .center-price {
+        font-size: 11.5px;
+        font-weight: 900;
+        color: #ffffff;
+        background: rgba(212, 175, 55, 0.3);
+        padding: 3px 8px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 215, 0, 0.5);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+/* Bought State */
+.pillar-front.bought {
+    justify-content: space-between;
+    padding: 10px 4px;
+}
+
+    .pillar-front.bought .top-num {
+        font-size: 10px;
+        font-weight: 900;
+        color: #000;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #ffd700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #fff;
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.9);
+    }
+
+    .pillar-front.bought .big-logo-container {
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+        .pillar-front.bought .big-logo-container img {
+            max-width: 90%;
+            max-height: 90px;
+            object-fit: contain;
+            transform: scale(1.15);
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
+        }
+
+    .pillar-front.bought .big-brand-name {
+        font-size: 12.5px;
+        font-weight: 900;
+        color: #ffd700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+        max-width: 95%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+    }
+
+/* VIP Badge Styling */
+.vip-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(45deg, #ffd700, #ff8c00);
+    color: #000;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 5;
+}
+
+/* Shared Brand Header on Card */
+.shared-banner {
+    position: absolute;
+    top: 5px;
+    font-size: 9px;
+    font-weight: bold;
+    color: #ffd700;
+    letter-spacing: 0.5px;
+    text-align: center;
+    width: 100%;
+}
+
+.pillars-footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    position: relative;
+}
+
+.center-dots-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.refresh-timer {
+    font-size: 20px;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+}
+
+.slider-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.s-dot {
+    width: 6.5px;
+    height: 6.5px;
+    background: #444444;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+    .s-dot.active {
+        background: #f3c258;
+        box-shadow: 0 0 5px #f3c258;
+    }
+
+.limited-spots-info {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.live-counter-inline {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 20px;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.pulsing-red-dot {
+    width: 15px;
+    height: 15px;
+    background-color: #ff1a1a;
+    border-radius: 50%;
+    box-shadow: 0 0 7px #ff1a1a;
+    animation: pulse-dot 1.5s infinite;
+    display: inline-block;
+}
+
+@keyframes pulse-dot {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.8);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 7px rgba(255, 26, 26, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 26, 26, 0);
+    }
+}
+
+/* LOWER SECTION: $1 SPOT */
+.pixel-board-section {
+    border: 2px solid #d4af37;
+    border-radius: 10px;
+    padding: 14px;
+    background: #15151a;
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.purple-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.btn-buy-purple {
+    background: linear-gradient(180deg, #6c1ed9 0%, #2b0660 100%);
+    border: 1.5px solid #b066ff;
+    color: #ffffff;
+    padding: 8px 24px;
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(176, 102, 255, 0.45);
+}
+
+.purple-limit-tag {
+    border: 1px solid #a855f7;
+    background: #120326;
+    color: #d8b4fe;
+    font-size: 9.5px;
+    padding: 2px 9px;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+#normalCounterDisplay {
+    text-align: center;
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* FIXED BLACK GRID CONTAINER */
+.pixel-board-grid {
+    position: relative;
+    display: block !important;
+    background: #000000 !important;
+    padding: 0 !important;
+    border-radius: 6px;
+    border: 1px solid #22222a;
+    height: 450px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+}
+
+#moon-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* FOOTER INSIDE FRAME */
+.site-footer {
+    border-top: 1px solid #2a2a35;
+    padding-top: 8px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.owner-tag {
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #aaaaaa;
+    font-weight: 900;
+    margin-bottom: 3px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    color: #777777;
+    font-weight: 800;
+}
+
+.footer-links a {
+    color: #aaaaaa;
+    text-decoration: none;
+}
+
+/* MODAL STYLING */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #16161c;
+    border: 2px solid #f3c258;
+    padding: 20px;
+    border-radius: 12px;
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 0 30px rgba(243, 194, 88, 0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+    .modal-box h3 {
+        color: #ffd700;
+        font-size: 17px;
+        font-weight: 900;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .modal-box label {
+        font-size: 11px;
+        color: #ccc;
+        margin-bottom: -5px;
+        font-weight: 700;
+    }
+
+    .modal-box input[type="text"],
+    .modal-box input[type="file"] {
+        background: #1f1f28;
+        border: 1px solid #3a3a48;
+        color: #fff;
+        padding: 8px 10px;
+        border-radius: 6px;
+        font-size: 11.5px;
+        width: 100%;
+    }
+
+.payment-options {
+    background: #1c1c24;
+    border: 2px solid #2f2f3c;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.payment-group-title {
+    font-size: 10.5px;
+    color: #f3c258;
+    font-weight: 800;
+}
+
+.payment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.pay-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #23232e;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #fff;
+    border: 1px solid #383846;
+}
+
+    .pay-option input {
+        cursor: pointer;
+    }
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.btn-pay-now {
+    flex: 1;
+    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%);
+    color: #000;
+    border: 1.5px solid #fff5cf;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 900;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.btn-cancel {
+    background: #33333d;
+    color: #ccc;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+}
+/* Legal modals ko shuru mein hide karne ke liye */
+.legal-modal-overlay {
+    display: none !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+    /* Jab JS se 'active' class lagegi tabhi ye dikhega */
+    .legal-modal-overlay.active {
+        display: flex !important;
+    }

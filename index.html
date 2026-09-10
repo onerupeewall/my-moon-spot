@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE DOLLAR MILLION SPOT</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- THREE.JS LIBRARY FOR SPACE WARP 3D ENGINE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* कानूनी और नेविगेशन पृष्ठों के लिए पॉप-अप मोडल की अतिरिक्त शैली */
+        .legal-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .legal-modal-box {
+            background: #16161c;
+            color: #fff;
+            border: 2px solid #f3c258;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            font-family: sans-serif;
+        }
+
+            .legal-modal-box h2 {
+                color: #f3c258;
+                margin-top: 0;
+                text-align: center;
+                font-size: 24px;
+                border-bottom: 1px solid #333;
+                padding-bottom: 15px;
+            }
+
+            .legal-modal-box p, .legal-modal-box li {
+                font-size: 14px;
+                line-height: 1.6;
+                color: #ccc;
+            }
+
+            .legal-modal-box ul {
+                padding-left: 20px;
+            }
+
+        .legal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #f3c258;
+            font-size: 28px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .legal-close-btn:hover {
+                color: #fff;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- THE ULTIMATE GOLDEN BORDER WRAPPER -->
+    <div class="ultimate-golden-frame">
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div>
+                    <h1 class="site-title">THE DOLLAR <span class="gold-text">MILLION SPOT</span></h1>
+                    <p class="site-tagline">Own Your Space. Be Everywhere.</p>
+                </div>
+                <nav class="nav-menu">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="javascript:void(0)" class="nav-link" onclick="openLegalModal('dollarSpotModal')">$1 Spot</a>
+                    <a href="javascript:void(0)" class="nav-link" onclick="openLegalModal('navPremiumModal')">Premium Board</a>
+                    <a href="javascript:void(0)" class="nav-link" onclick="openLegalModal('howItWorksModal')">How It Works</a>
+                </nav>
+            </header>
+
+            <!-- Premium Board Section -->
+            <section class="premium-board-section">
+                <div class="premium-grid">
+                    <!-- Left Panel -->
+                    <div class="left-panel">
+                        <div class="crown-badge">
+                            <span style="font-size: 35px;">👑</span>
+                            <span>PREMIUM BOARD</span>
+                        </div>
+
+                        <div class="price-block">
+                            <span class="sub-label">TOTAL PREMIUM VALUE</span>
+                            <div class="main-price" id="premiumUsdPrice">$1,047.92</div>
+                            <div class="currency-price" id="premiumInrPrice">₹99,999.00</div>
+                        </div>
+
+                        <ul class="features-list">
+                            <li><span class="check-icon">✓</span> Top position visibility</li>
+                            <li><span class="check-icon">✓</span> Highlight your brand to millions</li>
+                            <li><span class="check-icon">✓</span> One time payment - Lifetime listing</li>
+                            <li><span class="check-icon">✓</span> Maximum trust & attention</li>
+                        </ul>
+
+                        <button class="btn-buy-gold" onclick="openBuyModal('premium')">
+                            Buy Premium Spot – <span id="btnPremiumText">$1,047.92</span>
+                        </button>
+                    </div>
+
+                    <!-- Right Pillars Area -->
+                    <div class="right-pillars-area">
+                        <div class="spotlights-container">
+                            <div class="spotlight"></div>
+                            <div class="spotlight"></div>
+                            <div class="spotlight"></div>
+                            <div class="spotlight"></div>
+                            <div class="spotlight"></div>
+                        </div>
+
+                        <div class="pillars-grid" id="pillarsGrid"></div>
+
+                        <div class="pillars-footer-bar">
+                            <div class="center-dots-wrapper">
+                                <span class="refresh-timer" id="timerText">25s</span>
+                                <div class="slider-dots" id="dotsContainer">
+                                    <span class="s-dot active"></span>
+                                    <span class="s-dot"></span>
+                                    <span class="s-dot"></span>
+                                    <span class="s-dot"></span>
+                                    <span class="s-dot"></span>
+                                </div>
+                            </div>
+
+                            <div class="limited-spots-info">
+                                <div class="live-counter-inline">
+                                    <span class="pulsing-red-dot"></span>
+                                    <span id="liveSeatsText">500 Seats Left</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- $1 Spot Section (Deep Space Warp Highway) -->
+            <section class="pixel-board-section">
+                <div class="purple-btn-wrapper">
+                    <button class="btn-buy-purple" onclick="openBuyModal('normal')">
+                        Buy Your Space Now – $1 (<span id="btnNormalInr">₹83</span>) →
+                    </button>
+
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px;">
+                        <span style="width: 10px; height: 10px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: blinker 1.5s linear infinite;"></span>
+                        <span id="liveSpotsCounter" style="color: #ff3333; font-size: 15px; font-weight: bold; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);">0 / 1,000,000 Spots Filled</span>
+                    </div>
+                </div>
+
+                <!-- 3D Space Canvas Container -->
+                <div class="pixel-board-grid" id="pixelBoardGrid"></div>
+
+                <div style="text-align: center; width: 100%; margin-top: 10px; font-weight: bold; color: #ffd700;">CREATED BY KARAN RAI</div>
+            </section>
+
+            <!-- Footer Inside the Golden Frame -->
+            <footer class="site-footer">
+                <div class="footer-bottom">
+                    <p>© 2025 All Rights Reserved.</p>
+                    <div class="footer-links">
+                        <a href="javascript:void(0)" onclick="openLegalModal('termsModal')">Terms & Conditions</a> |
+                        <a href="javascript:void(0)" onclick="openLegalModal('privacyModal')">Privacy Policy</a> |
+                        <a href="javascript:void(0)" onclick="openLegalModal('refundModal')">Refund Policy</a> |
+                        <a href="javascript:void(0)" onclick="openLegalModal('contactModal')">Contact Us</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- UNIVERSAL BUY POPUP MODAL -->
+    <div class="modal-overlay" id="buyModal">
+        <div class="modal-box">
+            <h3 id="modalTitle">Buy Spot</h3>
+
+            <div id="brandNameWrapper">
+                <label>Brand Name</label>
+                <input type="text" id="inputBrandName" placeholder="e.g. MY BRAND">
+            </div>
+
+            <label>Upload Image / Logo (From Gallery)</label>
+            <input type="file" id="inputLogoFile" accept="image/*">
+
+            <label>Main Website Link</label>
+            <input type="text" id="inputTargetUrl" placeholder="https://yourwebsite.com">
+
+            <label>Select Payment Method (<span id="modalPriceDisplay">Loading...</span>)</label>
+            <div class="payment-options">
+                <div class="payment-group-title">🇮🇳 India (UPI Options)</div>
+                <div class="payment-grid">
+                    <label class="pay-option">
+                        <input type="radio" name="payMethod" value="gpay" checked>
+                        <span>Google Pay</span>
+                    </label>
+                    <label class="pay-option">
+                        <input type="radio" name="payMethod" value="phonepe">
+                        <span>PhonePe</span>
+                    </label>
+                    <label class="pay-option">
+                        <input type="radio" name="payMethod" value="paytm">
+                        <span>Paytm</span>
+                    </label>
+                </div>
+
+                <div class="payment-group-title" style="margin-top: 8px;">🌍 International</div>
+                <div class="payment-grid">
+                    <label class="pay-option">
+                        <input type="radio" name="payMethod" value="card">
+                        <span>Credit/Debit Card</span>
+                    </label>
+                    <label class="pay-option">
+                        <input type="radio" name="payMethod" value="paypal">
+                        <span>PayPal</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-pay-now" id="btnPaySubmit" onclick="confirmPurchase()">Pay & Publish</button>
+                <button class="btn-cancel" onclick="closeBuyModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEGAL & INFO MODALS -->
+    <div class="legal-modal-overlay" id="dollarSpotModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('dollarSpotModal')">&times;</button>
+            <h2>$1 Spot Information</h2>
+            <p><strong>English:</strong></p>
+            <ul>
+                <li>This section allows anyone to claim a permanent digital spot for just one dollar.</li>
+                <li>It is designed to give maximum affordable exposure to small businesses and startups.</li>
+                <li>Once purchased, your brand logo and website link will remain active for a lifetime.</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>हिंदी:</strong></p>
+            <ul>
+                <li>यह खंड किसी भी व्यक्ति को मात्र एक डॉलर में एक स्थाई डिजिटल स्थान प्राप्त करने की अनुमति देता है।</li>
+                <li>एक बार खरीदे जाने के बाद, आपका ब्रांड लोगो और वेबसाइट लिंक आजीवन सक्रिय रहेगा।</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="legal-modal-overlay" id="navPremiumModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('navPremiumModal')">&times;</button>
+            <h2>Premium Board Information</h2>
+            <p><strong>English:</strong></p>
+            <ul>
+                <li>The Premium Board features top-tier pillar slots designed for high-value brand promotion.</li>
+                <li>It offers elite visibility at the very top position to grab immediate user attention.</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>हिंदी:</strong></p>
+            <ul>
+                <li>प्रीमियम बोर्ड उच्च मूल्य वाले ब्रांड प्रचार के लिए शीर्ष स्तर के स्तंभ स्लॉट प्रदान करता है।</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="legal-modal-overlay" id="howItWorksModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('howItWorksModal')">&times;</button>
+            <h2>How It Works / यह कैसे काम करता है</h2>
+            <p><strong>English:</strong></p>
+            <ul>
+                <li>First, choose between the affordable $1 Spot or the exclusive Premium Board.</li>
+                <li>Enter your brand name, upload your logo image, and provide your website link.</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>हिंदी:</strong></p>
+            <ul>
+                <li>सबसे पहले, किफायती $1 स्पॉट या विशिष्ट प्रीमियम बोर्ड में से किसी एक का चयन करें।</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="legal-modal-overlay" id="termsModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('termsModal')">&times;</button>
+            <h2>Terms & Conditions</h2>
+            <p>All spaces bought on the board are digital advertising spots. Once published, content must follow guidelines.</p>
+        </div>
+    </div>
+
+    <div class="legal-modal-overlay" id="privacyModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('privacyModal')">&times;</button>
+            <h2>Privacy Policy</h2>
+            <p>We respect your privacy and only use submitted brand details for active board display.</p>
+        </div>
+    </div>
+
+    <div class="legal-modal-overlay" id="refundModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('refundModal')">&times;</button>
+            <h2>Refund Policy</h2>
+            <p>All digital product sales and spot purchases are strictly non-refundable due to immediate publicity.</p>
+        </div>
+    </div>
+
+    <div class="legal-modal-overlay" id="contactModal">
+        <div class="legal-modal-box">
+            <button class="legal-close-btn" onclick="closeLegalModal('contactModal')">&times;</button>
+            <h2>Contact Us</h2>
+            <ul>
+                <li><strong>Platform Owner:</strong> Karan Rai</li>
+                <li><strong>Support Email:</strong> support@thedollarmillionspot.com</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+                function openLegalModal(modalId) {
+                    const modal = document.getElementById(modalId);
+                    if (modal) modal.style.display = 'flex';
+                }
+                function closeLegalModal(modalId) {
+                    const modal = document.getElementById(modalId);
+                    if (modal) modal.style.display = 'none';
+                }
+    </script>
+</body>
+</html>
