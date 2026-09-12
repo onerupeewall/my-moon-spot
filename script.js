@@ -1,3 +1,5 @@
+// ================= THREE.JS 10M SPOTS ENGINE =================
+
 // Disable right-click menu everywhere on the page
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
@@ -149,7 +151,7 @@ if (timerText) {
     }, 1000);
 }
 
-// MODAL CONTROLS
+// MODAL CONTROLS & BUY BUTTON LOGIC
 let currentBoardType = 'premium';
 function openBuyModal(type) {
     if (type === 'premium') {
@@ -160,7 +162,7 @@ function openBuyModal(type) {
         }
     } else {
         if (currentNormalSpotsFilled >= MAX_NORMAL_SPOTS) {
-            alert('Sorry, all 1,000,000 Normal spots are full!');
+            alert('Sorry, all 10,000,000 Normal spots are full!');
             return;
         }
     }
@@ -181,8 +183,8 @@ function openBuyModal(type) {
         const calculatedInrNormal = Math.round(liveUsdToInrRate);
         if (modalTitle) modalTitle.innerText = 'BUY $1 SPOT';
         if (modalPriceDisplay) modalPriceDisplay.innerText = `$1.00 (~₹${calculatedInrNormal})`;
-        if (brandNameWrapper) brandNameWrapper.style.display = 'none';
-        if (btnPaySubmit) btnPaySubmit.innerText = `Pay $1.00 (₹${calculatedInrNormal}) & Publish`;
+        if (brandNameWrapper) brandNameWrapper.style.display = 'block';
+        if (btnPaySubmit) btnPaySubmit.innerText = `$1.00 (₹${calculatedInrNormal}) & Publish`;
     }
 
     const buyModal = document.getElementById('buyModal');
@@ -194,359 +196,222 @@ function closeBuyModal() {
     if (buyModal) buyModal.style.display = 'none';
 }
 
-function confirmPurchase() {
-    const fileInput = document.getElementById('inputLogoFile');
-    const targetUrlEl = document.getElementById('inputTargetUrl');
-    const targetUrl = targetUrlEl ? targetUrlEl.value || 'https://google.com' : 'https://google.com';
+// EVENT DELEGATION FOR BUY SUBMIT BUTTON (सुधरा हुआ कोड जो सीधे यूजर का असली लिंक पकड़ेगा)
+document.addEventListener('click', (event) => {
+    if (event.target && event.target.id === 'btnPaySubmit') {
+        event.preventDefault();
 
-    const selectedPayEl = document.querySelector('input[name="payMethod"]:checked');
-    const selectedPayment = selectedPayEl ? selectedPayEl.value : 'online';
+        const fileInput = document.querySelector('input[type="file"]');
 
-    if (currentBoardType === 'premium') {
-        const brandNameEl = document.getElementById('inputBrandName');
-        const brandName = brandNameEl ? brandNameEl.value || 'MY BRAND' : 'MY BRAND';
-        const availableSpot = allSpots.find(item => !item.isBought);
+        // यूजर द्वारा दर्ज किए गए लिंक को सही से पकड़ने के लिए सभी संभावित इनपुट आईडी की जाँच
+        const urlInput = document.getElementById('userTargetUrl') ||
+            document.getElementById('targetUrlInput') ||
+            document.getElementById('urlInput') ||
+            document.getElementById('targetUrl') ||
+            document.querySelector('input[name*="url"]') ||
+            document.querySelector('input[type="url"]');
 
-        if (!availableSpot) {
-            alert('All 500 Premium spots are sold out!');
+        const brandInput = document.querySelector('#brandNameWrapper input') || document.querySelector('input[type="text"]');
+
+        let targetUrl = '';
+        if (urlInput && urlInput.value.trim() !== '') {
+            targetUrl = urlInput.value.trim();
+        } else {
+            alert('कृपया अपनी वेबसाइट या सोशल मीडिया (जैसे इंस्टाग्राम) का सही लिंक दर्ज करें!');
             return;
         }
 
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                applyPurchase(availableSpot, brandName, e.target.result, targetUrl, selectedPayment);
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else {
-            const defaultLogo = 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Android_O_Preview_Logo.png';
-            applyPurchase(availableSpot, brandName, defaultLogo, targetUrl, selectedPayment);
+        if (targetUrl && !targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+            targetUrl = 'https://' + targetUrl;
         }
-    } else {
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                addNewUserNormalSpot(e.target.result, targetUrl);
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else {
-            const defaultLogo = 'https://i.pravatar.cc/100?img=33';
-            addNewUserNormalSpot(defaultLogo, targetUrl);
+
+        const brandName = brandInput && brandInput.value.trim() !== '' ? brandInput.value.trim() : 'MY BRAND';
+
+        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            alert('Please select/upload an image or logo from your gallery first!');
+            return;
         }
-    }
-}
 
-function showInstantCongratulationsPopup(spot) {
-    const existingPopup = document.getElementById('rewardBlurOverlay');
-    if (existingPopup) existingPopup.remove();
+        const imageFile = fileInput.files[0];
+        const reader = new FileReader();
 
-    if (!document.getElementById('rewardAnimStyle')) {
-        const styleSheet = document.createElement('style');
-        styleSheet.id = 'rewardAnimStyle';
-        styleSheet.type = 'text/css';
-        styleSheet.innerText = `
-            @keyframes slowZoomReward {
-                0% { transform: scale(0.2); opacity: 0; }
-                100% { transform: scale(1); opacity: 1; }
+        reader.onload = function (e) {
+            const imageDataUrl = e.target.result;
+
+            if (currentBoardType === 'normal') {
+                addNewUserNormalSpot(brandName, imageDataUrl, targetUrl);
+            } else {
+                addNewUserPremiumSpot(brandName, imageDataUrl, targetUrl);
             }
-            .blur-bg-active {
-                backdrop-filter: blur(12px) !important;
-                -webkit-backdrop-filter: blur(12px) !important;
-                background: rgba(0, 0, 0, 0.75) !important;
-            }
-        `;
-        document.head.appendChild(styleSheet);
+        };
+
+        reader.readAsDataURL(imageFile);
     }
-
-    const overlay = document.createElement('div');
-    overlay.id = 'rewardBlurOverlay';
-    overlay.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; z-index:99999; display:flex; flex-direction:column; align-items:center; justify-content:center;';
-    overlay.className = 'blur-bg-active';
-
-    overlay.innerHTML = `
-        <div style="display:flex; flex-direction:column; align-items:center; animation: slowZoomReward 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;">
-            <div style="font-size:32px; font-weight:bold; color:#ffd700; margin-bottom:15px; text-shadow: 0 0 20px rgba(255,215,0,0.6); letter-spacing:1px;">🎉 CONGRATULATIONS! 🎉</div>
-            <div style="font-size:14px; color:#ddd; margin-bottom:20px;">Spot #${spot.rank} Unlocked Successfully</div>
-            
-            <div style="width:220px; height:320px; background:linear-gradient(135deg, #1a1a1a, #2a2a2a); border:3px solid #ffd700; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; box-shadow: 0 0 50px rgba(255,215,0,0.5); box-sizing: border-box; position:relative;">
-                <div style="position:absolute; top:12px; left:15px; font-size:13px; color:#aaa; font-weight:bold;">#${spot.rank}</div>
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex-grow:1; width:100%;">
-                    <div style="display:flex; align-items:center; justify-content:center; height:110px; margin-bottom:15px;">
-                      <img src="${spot.logo}" alt="${spot.name}" style="max-width:100px; max-height:100px; width:auto; height:auto; object-fit:contain;">
-                    </div>
-                    <div style="font-size:18px; font-weight:bold; color:#fff; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%;">${spot.name}</div>
-                </div>
-            </div>
-
-            <div style="margin-top:25px; font-size:13px; color:#aaa; background:rgba(255,255,255,0.08); padding:8px 18px; border-radius:20px; border:1px solid rgba(255,215,0,0.3);">
-                Adjusting to board in <span id="rewardCountdown" style="color:#ffd700; font-weight:bold;">3</span>s...
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(overlay);
-
-    let sec = 3;
-    const secSpan = document.getElementById('rewardCountdown');
-    const timerInterval = setInterval(() => {
-        sec--;
-        if (secSpan) secSpan.innerText = sec;
-        if (sec <= 0) {
-            clearInterval(timerInterval);
-            overlay.remove();
-        }
-    }, 1000);
-}
-
-function applyPurchase(spot, name, logo, url, payMethod) {
-    spot.isBought = true;
-    spot.isUserOwned = true;
-    spot.name = name;
-    spot.logo = logo;
-    spot.url = url;
-
-    const boughtSpots = allSpots.filter(s => s.isBought);
-    const boughtIndex = boughtSpots.findIndex(s => s.rank === spot.rank);
-    currentBatchIndex = Math.floor(boughtIndex / 5);
-
-    timeLeft = 25;
-    if (timerText) timerText.innerText = `${timeLeft}s`;
-
-    renderBoard();
-    closeBuyModal();
-    showInstantCongratulationsPopup(spot);
-}
-
-
-// ==========================================================================
-// 🌌 REALISTIC DEEP SPACE, SHOOTING STARS & STRAIGHT STREAMING LOGOS ENGINE
-// ==========================================================================
-const MAX_NORMAL_SPOTS = 1000000;
-let currentNormalSpotsFilled = 15420;
-
+});
+// ================= THREE.JS 10M SPOTS ENGINE (CONTINUED) =================
+const MAX_NORMAL_SPOTS = 10000000;
+let currentNormalSpotsFilled = 0;
 let spaceScene, spaceCamera, spaceRenderer;
-const spaceLogoPool = [];
-const shootingStarsPool = [];
-const maxActiveStreamLogos = 28;
-
-const sampleBrandLogos = [
-    { name: "GOOGLE", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", url: "https://google.com" },
-    { name: "AMAZON", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "https://amazon.com" },
-    { name: "NETFLIX", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", url: "https://netflix.com" },
-    { name: "YOUTUBE", logo: "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg", url: "https://youtube.com" },
-    { name: "SPOTIFY", logo: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg", url: "https://spotify.com" },
-    { name: "MICROSOFT", logo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg", url: "https://microsoft.com" },
-    { name: "INSTAGRAM", logo: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg", url: "https://instagram.com" },
-    { name: "DISCORD", logo: "https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo_%282006-2021%29.svg", url: "https://discord.com" }
-];
-
-const userCustomQueue = [];
+let spaceLogoQueue = [];
+let activeMeshPool = [];
+const MAX_ACTIVE_MESHES = 120;
+let starField;
+let queuePointer = 0;
 
 function setupNormalCounterUI() {
     const gridContainer = document.getElementById('pixelBoardGrid');
     if (!gridContainer) return;
+
+    let existingSearchBox = document.getElementById('spaceSearchWrapper');
+    if (!existingSearchBox) {
+        const searchHTML = `
+            <div id="spaceSearchWrapper" style="display:flex; justify-content:center; align-items:center; padding:10px; background:rgba(0,0,0,0.6); border-bottom:1px solid #333; gap:10px; width:100%; box-sizing:border-box;">
+                <input type="text" id="spaceSearchInput" placeholder="🔍 Search logo / brand name in Space..." style="width:280px; padding:8px 12px; border-radius:8px; border:1px solid #ffd700; background:#111; color:#fff; font-size:14px; outline:none;">
+                <button id="spaceSearchBtn" style="padding:8px 18px; background:linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border:none; border-radius:8px; color:#000; font-weight:bold; cursor:pointer; font-size:14px;">Search</button>
+            </div>
+        `;
+        gridContainer.insertAdjacentHTML('beforebegin', searchHTML);
+    }
 
     gridContainer.innerHTML = '';
     gridContainer.style.position = 'relative';
     gridContainer.style.overflow = 'hidden';
     gridContainer.style.width = '100%';
     gridContainer.style.height = '450px';
-    gridContainer.style.background = '#010105';
-    gridContainer.style.borderRadius = '12px';
 
-    if (typeof THREE === 'undefined') {
-        gridContainer.innerHTML = '<div style="color:#fff; text-align:center; padding:50px;">Three.js library is loading... Please check internet connection.</div>';
-        return;
-    }
-
-    // 1. Scene, Camera & Renderer
     spaceScene = new THREE.Scene();
-    spaceScene.fog = new THREE.FogExp2(0x010105, 0.025);
-
-    spaceCamera = new THREE.PerspectiveCamera(60, gridContainer.clientWidth / gridContainer.clientHeight, 0.1, 1000);
-    spaceCamera.position.set(0, 0, 10);
+    spaceCamera = new THREE.PerspectiveCamera(60, gridContainer.clientWidth / gridContainer.clientHeight, 0.1, 1500);
+    spaceCamera.position.z = 5;
 
     spaceRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     spaceRenderer.setSize(gridContainer.clientWidth, gridContainer.clientHeight);
     spaceRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     gridContainer.appendChild(spaceRenderer.domElement);
 
-    // 2. Ambient Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
-    spaceScene.add(ambientLight);
-
-    // 3. Realistic Twinkling Starfield (Antariksh ke hazaro taare)
-    const starsCount = 2000;
-    const starGeometry = new THREE.BufferGeometry();
+    // STARFIELD
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 1200;
     const starPositions = new Float32Array(starsCount * 3);
 
     for (let i = 0; i < starsCount * 3; i += 3) {
-        starPositions[i] = (Math.random() - 0.5) * 150;     // X spread
-        starPositions[i + 1] = (Math.random() - 0.5) * 100; // Y spread
-        starPositions[i + 2] = (Math.random() - 0.5) * 350; // Z depth
+        starPositions[i] = (Math.random() - 0.5) * 400;
+        starPositions[i + 1] = (Math.random() - 0.5) * 400;
+        starPositions[i + 2] = (Math.random() - 0.5) * 1000;
     }
 
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    const starMaterial = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 0.5,
-        transparent: true,
-        opacity: 0.8
-    });
-    const starField = new THREE.Points(starGeometry, starMaterial);
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.8, transparent: true, opacity: 0.8 });
+    starField = new THREE.Points(starsGeometry, starsMaterial);
     spaceScene.add(starField);
 
-    // 4. Create Shooting Stars (Tutte hue tare / Meteors streak)
-    for (let i = 0; i < 6; i++) {
-        spawnShootingStar();
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.crossOrigin = 'anonymous';
+
+    for (let i = 0; i < MAX_ACTIVE_MESHES; i++) {
+        const planeGeo = new THREE.PlaneGeometry(2.0, 2.0);
+        const planeMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
+        const mesh = new THREE.Mesh(planeGeo, planeMat);
+
+        const sideMultiplier = Math.random() < 0.5 ? -1 : 1;
+        const posX = sideMultiplier * (4.0 + Math.random() * 4.0);
+        const posY = (Math.random() - 0.5) * 6.0;
+        const initialZ = -800 - (i * 35);
+
+        mesh.position.set(posX, posY, initialZ);
+        mesh.userData = { brandName: '', targetUrl: '', hasData: false, isPaused: false, resumeTimeout: null };
+
+        spaceScene.add(mesh);
+        activeMeshPool.push(mesh);
     }
 
-    // 5. Initialize Wide Spread Straight Logos Highway
-    for (let i = 0; i < maxActiveStreamLogos; i++) {
-        spawnHighwayLogoMesh(-260 + (i * 10));
-    }
-
-    // 6. High Performance Animation Loop
     function animateSpace() {
         requestAnimationFrame(animateSpace);
 
-        // Move Logos straight forward towards and past camera
-        for (let i = 0; i < spaceLogoPool.length; i++) {
-            const item = spaceLogoPool[i];
-            item.mesh.position.z += 0.25; // Forward speed
-
-            // Recycler: Jab logo camera ke peeche nikal jaye, to wapas deep space me bhej do
-            if (item.mesh.position.z > 12) {
-                resetAndRecycleLogoMesh(item);
+        if (starField) {
+            const positions = starField.geometry.attributes.position.array;
+            for (let i = 2; i < positions.length; i += 3) {
+                positions[i] += 0.15;
+                if (positions[i] > 100) positions[i] = -800;
             }
+            starField.geometry.attributes.position.needsUpdate = true;
         }
 
-        // Animate Shooting Stars (Tezi se diagonal gujarne wale tute hue tare)
-        for (let i = 0; i < shootingStarsPool.length; i++) {
-            const sStar = shootingStarsPool[i];
-            sStar.position.x -= sStar.userData.vx;
-            sStar.position.y -= sStar.userData.vy;
-            sStar.position.z += sStar.userData.vz;
+        const moveSpeed = 0.12;
 
-            // Reset shooting star when it goes off screen
-            if (sStar.position.z > 15 || sStar.position.x < -80 || sStar.position.y < -50) {
-                resetShootingStar(sStar);
+        for (let i = 0; i < activeMeshPool.length; i++) {
+            let mesh = activeMeshPool[i];
+
+            if (!mesh.userData.hasData) continue;
+
+            if (!mesh.userData.isPaused) {
+                mesh.position.z += moveSpeed;
+            }
+
+            if (mesh.position.z > 10) {
+                mesh.position.z = -800;
+                mesh.userData.isPaused = false;
+
+                const sideMultiplier = Math.random() < 0.5 ? -1 : 1;
+                mesh.position.x = sideMultiplier * (4.0 + Math.random() * 4.0);
+                mesh.position.y = (Math.random() - 0.5) * 6.0;
+
+                if (spaceLogoQueue.length > 0) {
+                    const nextItem = spaceLogoQueue[queuePointer];
+                    queuePointer = (queuePointer + 1) % spaceLogoQueue.length;
+
+                    mesh.userData.brandName = nextItem.name;
+                    mesh.userData.targetUrl = nextItem.url;
+
+                    textureLoader.load(nextItem.logo, (tex) => {
+                        tex.colorSpace = THREE.SRGBColorSpace;
+                        mesh.material.map = tex;
+                        mesh.material.opacity = 1.0;
+                        mesh.material.needsUpdate = true;
+                    });
+                }
             }
         }
 
         spaceRenderer.render(spaceScene, spaceCamera);
     }
+
     animateSpace();
 
-    // Responsive Resize
     window.addEventListener('resize', () => {
-        if (!gridContainer) return;
+        if (!gridContainer || !spaceRenderer || !spaceCamera) return;
         spaceCamera.aspect = gridContainer.clientWidth / gridContainer.clientHeight;
         spaceCamera.updateProjectionMatrix();
         spaceRenderer.setSize(gridContainer.clientWidth, gridContainer.clientHeight);
     });
 
-    updateLiveSpotsCounter();
-}
+    // --- सर्च बॉक्स का लॉजिक ---
+    setTimeout(() => {
+        const searchBtn = document.getElementById('spaceSearchBtn');
+        const searchInput = document.getElementById('spaceSearchInput');
 
-// Helper: Spawn Shooting Star (Tuta hua tara)
-function spawnShootingStar() {
-    const starGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array([0, 0, 0, -3, -1.5, 5]); // Tail length
-    starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        if (searchBtn && searchInput) {
+            const executeSearch = () => {
+                const query = searchInput.value.trim().toLowerCase();
+                if (!query) {
+                    alert('Please enter a brand name to search!');
+                    return;
+                }
 
-    const starMat = new THREE.LineBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.7
-    });
+                const foundMesh = activeMeshPool.find(m => m.userData.hasData && m.userData.brandName && m.userData.brandName.toLowerCase().includes(query));
 
-    const shootingStar = new THREE.Line(starGeo, starMat);
+                if (foundMesh) {
+                    showSimplePopupCard(foundMesh.userData.brandName, foundMesh.material.map.image.src, foundMesh.userData.targetUrl);
+                } else {
+                    alert('Logo not found currently in active space stream! Try another name or wait for it to appear.');
+                }
+            };
 
-    resetShootingStar(shootingStar);
-    spaceScene.add(shootingStar);
-    shootingStarsPool.push(shootingStar);
-}
-
-function resetShootingStar(star) {
-    const rx = (Math.random() - 0.5) * 80;
-    const ry = (Math.random() - 0.5) * 50 + 20;
-    const rz = (Math.random() - 0.5) * 150 - 50;
-
-    star.position.set(rx, ry, rz);
-    star.userData = {
-        vx: 0.8 + Math.random() * 0.6,
-        vy: 0.4 + Math.random() * 0.3,
-        vz: 1.2 + Math.random() * 0.8
-    };
-}
-
-// Helper: Spawn Straight Facing Highway Logos across wide space
-function spawnHighwayLogoMesh(initialZ) {
-    let brandData;
-    if (userCustomQueue.length > 0) {
-        brandData = userCustomQueue.shift();
-    } else {
-        brandData = sampleBrandLogos[Math.floor(Math.random() * sampleBrandLogos.length)];
-    }
-
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.crossOrigin = 'anonymous';
-
-    textureLoader.load(brandData.logo, (texture) => {
-        texture.colorSpace = THREE.SRGBColorSpace;
-
-        const planeGeo = new THREE.PlaneGeometry(3.0, 3.0);
-        const planeMat = new THREE.MeshBasicMaterial({
-            map: texture,
-            transparent: true,
-            side: THREE.DoubleSide
-        });
-
-        const logoMesh = new THREE.Mesh(planeGeo, planeMat);
-
-        // Wide spread across entire space (not just center)
-        const posX = (Math.random() - 0.5) * 22; // Wide left to right spread
-        const posY = (Math.random() - 0.5) * 14; // Wide top to bottom spread
-        const posZ = initialZ;
-
-        logoMesh.position.set(posX, posY, posZ);
-
-        // Ensure rotation is perfectly 0,0,0 so text/logos come completely straight facing the screen
-        logoMesh.rotation.set(0, 0, 0);
-
-        logoMesh.userData = { targetUrl: brandData.url || 'https://google.com' };
-
-        spaceScene.add(logoMesh);
-        spaceLogoPool.push({ mesh: logoMesh, data: brandData });
-    }, undefined, () => { });
-}
-
-// Recycle logo mesh in infinite loop maintaining straight flat posture
-function resetAndRecycleLogoMesh(item) {
-    let nextBrand;
-    if (userCustomQueue.length > 0) {
-        nextBrand = userCustomQueue.shift();
-    } else {
-        nextBrand = sampleBrandLogos[Math.floor(Math.random() * sampleBrandLogos.length)];
-    }
-
-    item.data = nextBrand;
-
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.crossOrigin = 'anonymous';
-    textureLoader.load(nextBrand.logo, (tex) => {
-        tex.colorSpace = THREE.SRGBColorSpace;
-        item.mesh.material.map = tex;
-        item.mesh.material.needsUpdate = true;
-    });
-
-    // Reset wide coordinates deep into space tunnel
-    const newX = (Math.random() - 0.5) * 22;
-    const newY = (Math.random() - 0.5) * 14;
-    item.mesh.position.set(newX, newY, -280);
-    item.mesh.rotation.set(0, 0, 0); // Keep straight
-    item.mesh.userData.targetUrl = nextBrand.url || 'https://google.com';
+            searchBtn.onclick = executeSearch;
+            searchInput.onkeydown = (e) => {
+                if (e.key === 'Enter') executeSearch();
+            };
+        }
+    }, 500);
 }
 
 function updateLiveSpotsCounter() {
@@ -556,17 +421,15 @@ function updateLiveSpotsCounter() {
     }
 }
 
-// Initialise space canvas
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     setupNormalCounterUI();
 } else {
     window.addEventListener('DOMContentLoaded', setupNormalCounterUI);
 }
 
-// Function when a user buys a new $1 normal spot
-function addNewUserNormalSpot(logoUrl, targetUrl) {
+function addNewUserNormalSpot(brandName, logoDataUrl, targetUrl) {
     if (currentNormalSpotsFilled >= MAX_NORMAL_SPOTS) {
-        alert('Seat Full! All 1,000,000 spots are booked.');
+        alert('Seat Full! All 10,000,000 spots are booked.');
         return;
     }
 
@@ -574,10 +437,29 @@ function addNewUserNormalSpot(logoUrl, targetUrl) {
     updateLiveSpotsCounter();
     closeBuyModal();
 
-    userCustomQueue.unshift({
-        name: "USER BRAND",
-        logo: logoUrl,
-        url: targetUrl
+    spaceLogoQueue.push({ name: brandName, logo: logoDataUrl, url: targetUrl });
+
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.crossOrigin = 'anonymous';
+
+    textureLoader.load(logoDataUrl, (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+
+        const targetMesh = activeMeshPool.find(m => !m.userData.hasData) || activeMeshPool[Math.floor(Math.random() * activeMeshPool.length)];
+        if (targetMesh) {
+            targetMesh.material.map = texture;
+            targetMesh.material.opacity = 1.0;
+            targetMesh.material.needsUpdate = true;
+            targetMesh.userData.brandName = brandName;
+            targetMesh.userData.targetUrl = targetUrl;
+            targetMesh.userData.hasData = true;
+            targetMesh.userData.isPaused = false;
+
+            targetMesh.position.z = -50;
+            const sideMultiplier = Math.random() < 0.5 ? -1 : 1;
+            targetMesh.position.x = sideMultiplier * (4.0 + Math.random() * 4.0);
+            targetMesh.position.y = (Math.random() - 0.5) * 6.0;
+        }
     });
 
     if (currentNormalSpotsFilled >= MAX_NORMAL_SPOTS) {
@@ -590,11 +472,61 @@ function addNewUserNormalSpot(logoUrl, targetUrl) {
     }
 }
 
-// Raycaster for clicking floating space logos
+function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
+    const emptySpotIndex = allSpots.findIndex(s => !s.isBought);
+    if (emptySpotIndex === -1) {
+        alert('Sorry, all 500 Premium spots are full!');
+        closeBuyModal();
+        return;
+    }
+
+    allSpots[emptySpotIndex] = {
+        rank: emptySpotIndex + 1,
+        isBought: true,
+        isUserOwned: true,
+        name: brandName,
+        logo: logoDataUrl,
+        url: targetUrl
+    };
+
+    closeBuyModal();
+    renderBoard();
+}
+
+// --- साधारण पॉपअप (ब्रांड लोगो और असली विज़िट लिंक के साथ) ---
+function showSimplePopupCard(brandName, logoUrl, targetUrl) {
+    const existingPopup = document.getElementById('simpleSpacePopup');
+    if (existingPopup) existingPopup.remove();
+
+    const popupHTML = `
+        <div id="simpleSpacePopup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:99999; backdrop-filter: blur(3px);">
+            <div style="background: #1a1a1a; border: 2px solid #444; border-radius: 12px; padding: 20px; width: 280px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.8); font-family: sans-serif; position: relative;">
+                
+                <!-- Close Button -->
+                <button onclick="document.getElementById('simpleSpacePopup').remove()" style="position:absolute; top:8px; right:10px; background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;">✕</button>
+
+                <!-- Logo & Brand Name -->
+                <div style="background: #111; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 1px solid #333;">
+                    <img src="${logoUrl}" style="max-width: 70px; max-height: 70px; object-fit: contain;">
+                    <div style="font-size: 14px; font-weight: bold; color: #fff; margin-top: 6px;">${brandName}</div>
+                </div>
+
+                <!-- Visit Link (Directly opens user's actual link) -->
+                <a href="${targetUrl}" target="_blank" style="display:block; background: #007bff; color: #fff; text-decoration: none; border-radius: 6px; padding: 10px; font-size: 13px; font-weight: bold; word-break: break-all; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+                    Visit Website ↗
+                </a>
+
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', popupHTML);
+}
+
+// Raycaster & Interaction Handler for 3D Space Logos
 const raycaster = new THREE.Raycaster();
 const mouseVector = new THREE.Vector2();
 
-document.write = document.write || function () { }; // Safety mock
+document.write = document.write || function () { };
 
 document.addEventListener('click', (event) => {
     const gridContainer = document.getElementById('pixelBoardGrid');
@@ -610,13 +542,24 @@ document.addEventListener('click', (event) => {
 
         raycaster.setFromCamera(mouseVector, spaceCamera);
 
-        const meshesOnly = spaceLogoPool.map(item => item.mesh);
-        const intersects = raycaster.intersectObjects(meshesOnly);
+        const intersects = raycaster.intersectObjects(activeMeshPool);
 
         if (intersects.length > 0) {
-            const clickedMesh = intersects.object;
-            if (clickedMesh.userData && clickedMesh.userData.targetUrl) {
-                window.open(clickedMesh.userData.targetUrl, '_blank');
+            const clickedMesh = intersects[0].object;
+            if (clickedMesh.userData && clickedMesh.userData.hasData) {
+                if (!clickedMesh.userData.isPaused) {
+                    clickedMesh.userData.isPaused = true;
+                    showSimplePopupCard(clickedMesh.userData.brandName, clickedMesh.material.map.image.src, clickedMesh.userData.targetUrl);
+
+                    clearTimeout(clickedMesh.userData.resumeTimeout);
+                    clickedMesh.userData.resumeTimeout = setTimeout(() => {
+                        clickedMesh.userData.isPaused = false;
+                    }, 5000);
+                } else {
+                    if (clickedMesh.userData.targetUrl) {
+                        window.open(clickedMesh.userData.targetUrl, '_blank');
+                    }
+                }
             }
         }
     }
