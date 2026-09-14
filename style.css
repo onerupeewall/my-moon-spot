@@ -1,3 +1,7 @@
+/* =======================================================
+   🏆 THE DOLLAR MILLION SPOT - OFFICIAL STYLE SHEET 🏆
+   ======================================================= */
+
 /* GLOBAL STYLES & RESET */
 * {
     margin: 0;
@@ -20,13 +24,14 @@ body {
     overflow-x: hidden;
 }
 
-/* --- EMERGENCY FIX FOR OUT-OF-BOUND TEXT & FOOTER --- */
+/* --- MAIN LAYOUT STRUCTURE --- */
 .ultimate-golden-frame {
     width: 100% !important;
     max-width: 1150px !important;
     margin: 0 auto !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
+    position: relative;
 }
 
 .main-wrapper {
@@ -34,28 +39,28 @@ body {
     max-width: 100% !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* Footer aur saare text elements ko box ke andar lock karne ke liye */
-.site-footer, .footer-bottom, .pixel-board-section, .top-header {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    word-break: break-word !important;
-    white-space: normal !important;
-}
-
-.footer-links {
+.columns-wrapper, .main-container {
     display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 5px !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100% !important;
 }
+
+/* TOP HEADER */
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding: 2px 0;
+    width: 100% !important;
+    position: relative !important;
+    z-index: 100000 !important;
+    pointer-events: auto !important;
 }
 
 .site-title {
@@ -81,6 +86,8 @@ body {
     gap: 14px;
     align-items: center;
     margin-top: 4px;
+    position: relative !important;
+    z-index: 100005 !important;
 }
 
 .nav-link {
@@ -88,26 +95,35 @@ body {
     text-decoration: none;
     font-size: 20px;
     font-weight: 800;
+    position: relative !important;
+    z-index: 100010 !important;
+    pointer-events: auto !important;
 }
 
     .nav-link.active {
         color: #f3c258;
     }
 
-/* PREMIUM BOARD SECTION */
+/* PREMIUM BOARD SECTION - आपका मुख्य सुनहरी बॉर्डर वाला बॉक्स */
 .premium-board-section {
-    border: 10px solid #ffea75;
-    border-radius: 100px;
-    padding: 30px;
-    background: #15151a;
-    box-shadow: 0 0 100px rgba(255, 221, 85, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.1);
-    position: relative;
+    border: 10px solid #ffea75 !important;
+    border-radius: 100px !important;
+    padding: 30px !important;
+    background: #15151a !important;
+    box-shadow: 0 0 100px rgba(255, 221, 85, 0.4), inset 0 0 15px rgba(255, 215, 0, 0.1) !important;
+    position: relative !important;
+    z-index: 5 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    overflow: hidden !important;
 }
 
 .premium-grid {
     display: flex;
     gap: 20px;
     align-items: stretch;
+    width: 100%;
 }
 
 .left-panel {
@@ -198,8 +214,8 @@ body {
 }
 
 .btn-buy-gold {
-    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%);
-    border: 1.5px solid #fff5cf;
+    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%) !important;
+    border: 1.5px solid #fff5cf !important;
     padding: 10px 8px;
     border-radius: 20px;
     font-weight: 900;
@@ -214,6 +230,9 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     width: 100%;
+    position: relative;
+    z-index: 20;
+    pointer-events: auto !important;
 }
 
     .btn-buy-gold:hover {
@@ -257,7 +276,7 @@ body {
     margin-top: 24px;
 }
 
-/* --- 3D Flip Card & VIP Badge CSS --- */
+/* 3D CARDS */
 .pillar-3d {
     perspective: 1000px;
     background: transparent !important;
@@ -306,7 +325,6 @@ body {
     transform: rotateY(180deg);
 }
 
-/* Unbought State (Seat Khali / Normal Card Inside Front) */
 .pillar-front.unbought {
     justify-content: center;
     gap: 8px;
@@ -342,7 +360,6 @@ body {
         box-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
 
-/* Bought State */
 .pillar-front.bought {
     justify-content: space-between;
     padding: 10px 4px;
@@ -393,7 +410,6 @@ body {
         text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
     }
 
-/* VIP Badge Styling */
 .vip-badge {
     position: absolute;
     top: 10px;
@@ -408,7 +424,6 @@ body {
     z-index: 5;
 }
 
-/* Shared Brand Header on Card */
 .shared-banner {
     position: absolute;
     top: 5px;
@@ -504,46 +519,59 @@ body {
         box-shadow: 0 0 0 0 rgba(255, 26, 26, 0);
     }
 }
-
 /* LOWER SECTION: $1 SPOT */
+
 .pixel-board-section {
-    border: 2px solid #d4af37;
-    border-radius: 10px;
-    padding: 14px;
-    background: #15151a;
-    box-shadow: 0 0 18px rgba(212, 175, 55, 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    border: 2px solid #d4af37 !important;
+    border-radius: 10px !important;
+    padding: 14px !important;
+    background: #15151a !important;
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.2) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    position: relative !important;
+    z-index: 5 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .purple-btn-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 3px !important;
+    position: relative !important;
+    z-index: 10000 !important;
+    width: 100% !important;
+    background: transparent !important;
 }
 
 .btn-buy-purple {
-    background: linear-gradient(180deg, #6c1ed9 0%, #2b0660 100%);
-    border: 1.5px solid #b066ff;
-    color: #ffffff;
-    padding: 8px 24px;
-    font-size: 20px;
-    font-weight: 900;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 0 12px rgba(176, 102, 255, 0.45);
+    background: linear-gradient(180deg, #6c1ed9 0%, #2b0660 100%) !important;
+    border: 1.5px solid #b066ff !important;
+    color: #ffffff !important;
+    padding: 12px 30px !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 15px rgba(176, 102, 255, 0.6) !important;
+    display: inline-block !important;
+    text-align: center !important;
+    width: auto !important;
+    position: relative !important;
+    z-index: 10005 !important;
+    pointer-events: auto !important;
 }
-
 .purple-limit-tag {
-    border: 1px solid #a855f7;
-    background: #120326;
-    color: #d8b4fe;
-    font-size: 18px;
-    padding: 2px 9px;
-    border-radius: 4px;
-    font-weight: 800;
+    border: 1px solid #a855f7 !important;
+    background: #120326 !important;
+    color: #d8b4fe !important;
+    font-size: 18px !important;
+    padding: 2px 9px !important;
+    border-radius: 4px !important;
+    font-weight: 800 !important;
 }
 
 #normalCounterDisplay {
@@ -554,35 +582,31 @@ body {
     font-size: 15px;
     letter-spacing: 0.5px;
 }
-
-/* FIXED BLACK GRID CONTAINER */
-.pixel-board-grid {
-    position: relative;
-    display: block !important;
-    background: #000000 !important;
-    padding: 0 !important;
-    border-radius: 6px;
-    border: 1px solid #22222a;
-    height: 450px !important;
-    width: 100% !important;
-    overflow: hidden !important;
+/* FIXED BLACK GRID CONTAINER - पारदर्शी क्लिक फिक्स /.pixel-board-grid {position: relative !important;display: block !important;background: #000000 !important;padding: 0 !important;border-radius: 6px;border: 1px solid #22222a;height: 450px !important;width: 100% !important;overflow: hidden !important;z-index: 1 !important;pointer-events: none !important; / माउस इसके आर-पार जा सकेगा */
 }
 
-#moon-canvas {
+#moon-canvas, .pixel-board-grid canvas {
     width: 100% !important;
     height: 100% !important;
     display: block !important;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1 !important;
+    pointer-events: auto !important;
 }
+/* 🪐 फुटर फिक्स - सफ़ेद, सबसे ऊपर और राइट साइड कोने में लॉक 🪐 */
 
-/* FOOTER INSIDE FRAME */
 .site-footer {
-    border-top: 1px solid #2a2a35;
-    padding-top: 8px;
-    text-align: center;
-    margin-top: 4px;
+    border-top: 1px solid #2a2a35 !important;
+    padding-top: 8px !important;
+    text-align: center !important;
+    margin-top: 4px !important;
+    position: relative !important;
+    z-index: 100000 !important;
+    width: 100% !important;
+    background: transparent !important;
+    pointer-events: auto !important;
 }
 
 .owner-tag {
@@ -594,156 +618,183 @@ body {
 }
 
 .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-    color: #777777;
-    font-weight: 800;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 20px !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    width: 100% !important;
 }
 
-.footer-links a {
-    color: #aaaaaa;
-    text-decoration: none;
+    .footer-bottom p {
+        color: #ffffff !important;
+    }
+
+.footer-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    color: #ffffff !important;
+    margin-left: auto !important;
+    position: relative !important;
+    z-index: 100005 !important;
 }
 
-/* MODAL STYLING */
+    .footer-links a {
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+        display: inline-block !important;
+        position: relative !important;
+        z-index: 100010 !important;
+        pointer-events: auto !important;
+    }
+/* =======================================================
+   👑 फॉर्म पॉपअप को पुरानी फोटो की तरह परफेक्ट करने का असली फिक्स 👑
+   ======================================================= */
+
+/* १. पॉपअप के पीछे का घना काला पर्दा और धुंधलापन */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.85);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.85) !important; /* गहरा काला पर्दा */
+    backdrop-filter: blur(8px) !important; /* पीछे के ग्रह धुंधले */
+    -webkit-backdrop-filter: blur(8px) !important;
     display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9999999 !important; /* सबसे ऊपर लॉक */
 }
 
-.modal-box {
-    background: #16161c;
-    border: 2px solid #f3c258;
-    padding: 20px;
-    border-radius: 12px;
-    width: 360px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 0 30px rgba(243, 194, 88, 0.3);
-    max-height: 90vh;
-    overflow-y: auto;
+/* २. मुख्य पॉपअप बॉक्स का सॉलिड काला रंग, चौड़ाई और सुनहरी सोने का मुख्य बॉर्डर */
+.modal-box, div.modal-box, #buyModal .modal-box {
+    background: #15151a !important; /* असली गहरा सॉलिड काला */
+    border: 3.5px solid #ffd700 !important; /* चमकीला मुख्य सोने का बॉर्डर */
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.35) !important; /* रॉयल गोल्ड ग्लो */
+    border-radius: 16px !important;
+    width: 480px !important; /* पुरानी फोटो जैसी परफेक्ट आलीशान चौड़ाई */
+    max-width: 90% !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important; /* अंदर की स्क्रॉलिंग चालू */
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* स्क्रीन के बिल्कुल सेंटर में जकड़ने के लिए */
+    margin: 0 !important;
+    padding: 25px !important;
+    z-index: 10000000 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important; /* अंदर के डिब्बों में गैप */
 }
 
-    .modal-box h3 {
-        color: #ffd700;
-        font-size: 17px;
-        font-weight: 900;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
+    /* ३. अंदर की लिखावट का पुराना साफ़-सुथरा (Clean Small Text) लुक */
     .modal-box label {
-        font-size: 11px;
-        color: #ccc;
-        margin-bottom: -5px;
-        font-weight: 700;
+        font-size: 11px !important; /* अक्षरों को वापस छोटा और शांत किया */
+        color: #cccccc !important;
+        font-weight: 700 !important; /* फालतू मोटाई कम की */
+        margin-bottom: -2px !important;
+        display: block !important;
+        text-align: left !important;
+        text-transform: none !important;
     }
 
+    /* नाम, फाइल और लिंक वाले इनपुट बॉक्स का असली चौड़ाई फिक्स */
     .modal-box input[type="text"],
-    .modal-box input[type="file"] {
-        background: #1f1f28;
-        border: 1px solid #3a3a48;
-        color: #fff;
-        padding: 8px 10px;
-        border-radius: 6px;
-        font-size: 11.5px;
-        width: 100%;
+    .modal-box input[type="file"],
+    #inputBrandName,
+    #userTargetUrl,
+    #inputLogoFile {
+        background: #1f1f28 !important;
+        border: 1px solid #3a3a48 !important; /* सोने का फालतू बॉर्डर हटाकर नॉर्मल किया */
+        color: #ffffff !important;
+        padding: 8px 10px !important; /* अंदर का स्पेस परफेक्ट किया */
+        border-radius: 8px !important;
+        font-size: 14px !important;
+        width: 100% !important; /* पूरी चौड़ाई में फैलने के लिए फिक्स */
+        font-weight: 500 !important;
+        display: block !important;
     }
 
+/* ४. पेमेंट ऑप्शंस वाले पूरे डिब्बे का फिक्स */
 .payment-options {
-    background: #1c1c24;
-    border: 2px solid #2f2f3c;
-    padding: 10px;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    background: #1c1c24 !important;
+    border: none !important; /* फालतू बॉर्डर गायब */
+    padding: 12px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
 }
 
 .payment-group-title {
-    font-size: 10.5px;
-    color: #f3c258;
-    font-weight: 800;
+    font-size: 10.5px !important; /* शीर्षक छोटा और साफ़ किया */
+    color: #f3c258 !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    text-align: left !important;
+    margin-top: 4px !important;
 }
 
+/* ५. पेमेंट ग्रिड (UPI Options) को वापस अपनी असली दो कॉलम वाली जगह पर लाना */
 .payment-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* दो कॉलम में सेट */
+    gap: 8px !important;
+    width: 100% !important;
 }
 
+/* छोटे-छोटे पेमेंट बटनों के टेक्स्ट और डिब्बे का क्लिन फिक्स */
 .pay-option {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #23232e;
-    padding: 6px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #fff;
-    border: 1px solid #383846;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: #23232e !important;
+    padding: 6px 8px !important; /* डिब्बे छोटे और सुडौल किए */
+    border-radius: 6px !important;
+    font-size: 13px !important; /* लिखावट छोटी और क्लिन की */
+    color: #ffffff !important;
+    border: 1px solid #383846 !important; /* फालतू गोल्ड बॉर्डर साफ़ */
+    font-weight: 700 !important;
+    width: 100% !important;
+    cursor: pointer !important;
 }
 
-    .pay-option input {
-        cursor: pointer;
-    }
-
+/* ६. मुख्य पीले 'Pay' बटन and 'Cancel' बटन की लिखावट का फिक्स */
 .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 8px;
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 10px !important;
+    width: 100% !important;
 }
 
 .btn-pay-now {
-    flex: 1;
-    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%);
-    color: #000;
-    border: 1.5px solid #fff5cf;
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: 900;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    flex: 1 !important;
+    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%) !important;
+    color: #000000 !important;
+    border: 1.5px solid #ffffff !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    font-weight: 900 !important;
+    font-size: 15px !important; /* लिखावट वापस पुरानी क्लिन की */
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;
+    text-transform: uppercase !important;
 }
 
 .btn-cancel {
-    background: #33333d;
-    color: #ccc;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 15px;
+    background: #33333d !important;
+    color: #ffffff !important;
+    border: 1px solid #555566 !important;
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
 }
-/* Legal modals ko shuru mein hide karne ke liye */
-.legal-modal-overlay {
-    display: none !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-}
-
-    /* Jab JS se 'active' class lagegi tabhi ye dikhega */
-    .legal-modal-overlay.active {
-        display: flex !important;
-    }

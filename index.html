@@ -55,6 +55,7 @@
 
             .legal-modal-box ul {
                 padding-left: 20px;
+                margin-bottom: 15px;
             }
 
         .legal-close-btn {
@@ -85,6 +86,7 @@
                     <h1 class="site-title">THE DOLLAR <span class="gold-text">MILLION SPOT</span></h1>
                     <p class="site-tagline">Own Your Space. Be Everywhere.</p>
                 </div>
+
                 <nav class="nav-menu">
                     <a href="#" class="nav-link active">Home</a>
                     <a href="javascript:void(0)" class="nav-link" onclick="openLegalModal('dollarSpotModal')">$1 Spot</a>
@@ -178,7 +180,7 @@
             <!-- Footer Inside the Golden Frame -->
             <footer class="site-footer">
                 <div class="footer-bottom">
-                    <p>© 2025 All Rights Reserved.</p>
+                    <p>© 2026 All Rights Reserved.</p>
                     <div class="footer-links">
                         <a href="javascript:void(0)" onclick="openLegalModal('termsModal')">Terms & Conditions</a> |
                         <a href="javascript:void(0)" onclick="openLegalModal('privacyModal')">Privacy Policy</a> |
@@ -204,7 +206,7 @@
             <input type="file" id="inputLogoFile" accept="image/*">
 
             <label>Main Website Link</label>
-            <input type="text" id="inputTargetUrl" placeholder="https://yourwebsite.com">
+            <input type="text" id="userTargetUrl" placeholder="Enter Website / Instagram URL">
 
             <label>Select Payment Method (<span id="modalPriceDisplay">Loading...</span>)</label>
             <div class="payment-options">
@@ -244,88 +246,124 @@
         </div>
     </div>
 
-    <!-- LEGAL & INFO MODALS -->
+    <!-- LEGAL & INFO MODALS (5 Lines: English Top, Hindi Bottom) -->
+    <!-- 1. $1 Spot Modal -->
     <div class="legal-modal-overlay" id="dollarSpotModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('dollarSpotModal')">&times;</button>
-            <h2>$1 Spot Information</h2>
-            <p><strong>English:</strong></p>
+            <h2>$1 Spot</h2>
             <ul>
-                <li>This section allows anyone to claim a permanent digital spot for just one dollar.</li>
-                <li>It is designed to give maximum affordable exposure to small businesses and startups.</li>
-                <li>Once purchased, your brand logo and website link will remain active for a lifetime.</li>
+                <li>Secure your permanent digital footprint on the internet's most iconic wall for just $1.</li>
+                <li>This is not just a spot; it's the most affordable gateway to showcase your brand to millions worldwide.</li>
+                <li>A tiny step today will immortalize your digital presence for years to come.</li>
+                <li>Pay just once and claim your lifetime ownership without any hidden or recurring charges.</li>
+                <li>Don't wait—claim your spot right now and let the entire world see you everywhere!</li>
             </ul>
-            <p style="margin-top: 15px;"><strong>हिंदी:</strong></p>
-            <ul>
-                <li>यह खंड किसी भी व्यक्ति को मात्र एक डॉलर में एक स्थाई डिजिटल स्थान प्राप्त करने की अनुमति देता है।</li>
-                <li>एक बार खरीदे जाने के बाद, आपका ब्रांड लोगो और वेबसाइट लिंक आजीवन सक्रिय रहेगा।</li>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>सिर्फ ₹1 (या $1) में इंटरनेट की इस महा-डिजिटल दीवार पर हमेशा के लिए अपनी जगह पक्की करें।</li>
+                <li>यह सिर्फ एक छोटी सी जगह नहीं, बल्कि दुनिया भर के लाखों लोगों तक अपने ब्रांड या सोशल प्रोफाइल को पहुँचाने का सबसे सस्ता जरिया है।</li>
+                <li>आज लगाया गया छोटा सा यह बोर्ड, आने वाले समय में आपको इंटरनेट पर अमर कर देगा।</li>
+                <li>एक बार पेमेंट करें और जिंदगी भर के लिए अपनी डिजिटल पहचान हमेशा के वास्ते सुरक्षित कर लें।</li>
+                <li>मौका हाथ से न जाने दें, आज ही अपना स्पॉट बुक करें और खुद को डिजिटल दुनिया में विजिबल बनाएं!</li>
             </ul>
         </div>
     </div>
 
+    <!-- 2. Premium Board Modal -->
     <div class="legal-modal-overlay" id="navPremiumModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('navPremiumModal')">&times;</button>
-            <h2>Premium Board Information</h2>
-            <p><strong>English:</strong></p>
+            <h2>Premium Board</h2>
             <ul>
-                <li>The Premium Board features top-tier pillar slots designed for high-value brand promotion.</li>
-                <li>It offers elite visibility at the very top position to grab immediate user attention.</li>
+                <li>Welcome to the ultimate VIP digital stage where only elite brands and winners stand out.</li>
+                <li>Your brand logo sits proudly inside a shining, high-value gold frame designed for maximum impact.</li>
+                <li>Capture instant attention from global visitors and skyrocket your credibility overnight.</li>
+                <li>With only 500 exclusive slots available, this is the rarest real estate on the web.</li>
+                <li>Upgrade to the elite tier today and give your business the luxury spotlight it truly deserves!</li>
             </ul>
-            <p style="margin-top: 15px;"><strong>हिंदी:</strong></p>
-            <ul>
-                <li>प्रीमियम बोर्ड उच्च मूल्य वाले ब्रांड प्रचार के लिए शीर्ष स्तर के स्तंभ स्लॉट प्रदान करता है।</li>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>यह इंटरनेट का सबसे वीआईपी और रॉयल गोल्ड स्टेज है, जहाँ केवल चुनिंदा और खास ब्रांड्स ही जगह पाते हैं।</li>
+                <li>प्रीमियम बोर्ड पर आपका लोगो हमेशा सबसे ऊपर, चमकते हुए गोल्ड फ्रेम में चमकता रहेगा।</li>
+                <li>यहाँ आने वाले हर विज़िटर की सीधी नजर सबसे पहले आपके ब्रांड पर पड़ेगी, जिससे ट्रस्ट और ग्रोथ कई गुना बढ़ जाएगी।</li>
+                <li>केवल सीमित स्लॉट्स होने के कारण यह दुनिया की सबसे एक्सक्लुसिव डिजिटल प्रॉपर्टी है।</li>
+                <li>अपने बिजनेस को एक नया भौकाल और लग्जरी पहचान देने के लिए आज ही प्रीमियम स्पॉट बुक करें!</li>
             </ul>
         </div>
     </div>
-
+    <!-- 3. How It Works Modal --> 
     <div class="legal-modal-overlay" id="howItWorksModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('howItWorksModal')">&times;</button>
-            <h2>How It Works / यह कैसे काम करता है</h2>
-            <p><strong>English:</strong></p>
+            <h2>How It Works</h2>
             <ul>
-                <li>First, choose between the affordable $1 Spot or the exclusive Premium Board.</li>
-                <li>Enter your brand name, upload your logo image, and provide your website link.</li>
+                <li>Select your preferred spot type—either the $1 space or the elite VIP Premium Board.</li>
+                <li>Enter your destination link (Website, Instagram, YouTube, or any social handle).</li>
+                <li>Upload your brand logo or image from your device and complete a secure checkout.</li>
+                <li>Boom! Your spot goes live instantly on our digital wall and interactive 3D space forever.</li>
+                <li>Watch global visitors click on your logo and land directly on your page 24/7!</li>
             </ul>
-            <p style="margin-top: 15px;"><strong>हिंदी:</strong></p>
-            <ul>
-                <li>सबसे पहले, किफायती $1 स्पॉट या विशिष्ट प्रीमियम बोर्ड में से किसी एक का चयन करें।</li>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>सबसे पहले अपनी पसंद का स्पॉट ($1 नॉर्मल या VIP प्रीमियम) चुनें।</li>
+                <li>अपनी कंपनी, ब्रांड या सोशल मीडिया (जैसे Instagram/YouTube) का सही लिंक दर्ज करें।</li>
+                <li>अपना मनपसंद लोगो या फोटो गैलरी से अपलोड करें और सुरक्षित भुगतान पूरा करें।</li>
+                <li>भुगतान पूरा होते ही आपका लोगो तुरंत हमारी डिजिटल दीवार और 3D स्पेस पर हमेशा के लिए लाइव हो जाएगा।</li>
+                <li>दुनिया भर के लोग जब भी आपकी वेबसाइट पर क्लिक करेंगे, वे सीधे आपके पेज पर पहुँच जाएंगे!</li>
             </ul>
         </div>
     </div>
 
+    <!-- 4. Terms & Conditions Modal -->
     <div class="legal-modal-overlay" id="termsModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('termsModal')">&times;</button>
             <h2>Terms & Conditions</h2>
-            <p>All spaces bought on the board are digital advertising spots. Once published, content must follow guidelines.</p>
+            <ul>
+                <li>By accessing and securing a digital space on this platform, you agree to bind yourself to our strict operational protocols. All spot placements, ownership records, and link redirections are final, and the management holds absolute authority to remove any malicious, unauthorized, or inappropriate content without prior notice.</li>
+            </ul>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>इस प्लेटफॉर्म पर अपनी डिजिटल जगह सुरक्षित करके आप हमारे सभी सख्त नियमों से बंध जाते हैं। सभी स्पॉट प्लेसमेंट और लिंक रिडायरेक्शन फाइनल हैं, और मैनेजमेंट के पास बिना किसी पूर्व सूचना के किसी भी गलत या आपत्तिजनक कंटेंट को हटाने का पूरा अधिकार है।</li>
+            </ul>
         </div>
     </div>
 
+    <!-- 5. Privacy Policy Modal -->
     <div class="legal-modal-overlay" id="privacyModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('privacyModal')">&times;</button>
             <h2>Privacy Policy</h2>
-            <p>We respect your privacy and only use submitted brand details for active board display.</p>
+            <ul>
+                <li>We command absolute data protection for every user; your uploaded logos, destination links, and transaction metadata are securely shielded. No personal data or commercial assets will ever be shared, sold, or compromised under any external third-party circumstances.</li>
+            </ul>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>हम हर यूजर के डेटा की पूर्ण सुरक्षा सुनिश्चित करते हैं; आपके अपलोड किए गए लोगो, लिंक्स और ट्रांजैक्शन रिकॉर्ड पूरी तरह सुरक्षित हैं। किसी भी बाहरी थर्ड-पार्टी स्थिति में आपका कोई भी निजी डेटा साझा या बेचा नहीं जाएगा।</li>
+            </ul>
         </div>
     </div>
 
+    <!-- 6. Refund Policy Modal -->
     <div class="legal-modal-overlay" id="refundModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('refundModal')">&times;</button>
             <h2>Refund Policy</h2>
-            <p>All digital product sales and spot purchases are strictly non-refundable due to immediate publicity.</p>
+            <ul>
+                <li>Due to the instant, permanent, and immutable nature of global digital allocations, all transactions executed for spot bookings are strictly non-refundable. Once a spot is claimed, published, or queued, no cancellation or monetary reversal request will be entertained under any circumstances.</li>
+            </ul>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>वैश्विक डिजिटल स्पेस के हमेशा के लिए लाइव और स्थायी होने के कारण, स्पॉट बुकिंग के लिए किया गया भुगतान पूरी तरह से नॉन-रिफंडेड (अप्रतिदेय) है। एक बार स्पॉट बुक या पब्लिश होने के बाद किसी भी परिस्थिति में रिफंड या कैंसिलेशन स्वीकार नहीं किया जाएगा।</li>
+            </ul>
         </div>
     </div>
 
+    <!-- 7. Contact Us Modal -->
     <div class="legal-modal-overlay" id="contactModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('contactModal')">&times;</button>
             <h2>Contact Us</h2>
             <ul>
-                <li><strong>Platform Owner:</strong> Karan Rai</li>
-                <li><strong>Support Email:</strong> support@thedollarmillionspot.com</li>
+                <li>For authorized official inquiries, administrative assistance, or technical escalations, direct your communications exclusively to our designated support channels. Unauthorized or spam outreach will be systematically blocked by our security protocols.<br><br><strong>Support Email:</strong> support@thedollarmillionspot.com<br><strong>Platform Owner:</strong> Karan Rai</li>
+            </ul>
+            <ul style="border-top: 1px solid #333; padding-top: 12px; margin-top: 10px;">
+                <li>किसी भी आधिकारिक पूछताछ, प्रशासनिक सहायता या तकनीकी सहायता के लिए केवल हमारे अधिकृत सपोर्ट माध्यमों पर संपर्क करें। किसी भी तरह के अनधिकृत या स्पैम संदेशों को हमारे सुरक्षा तंत्र द्वारा तुरंत ब्लॉक कर दिया जाएगा।<br><br><strong>सपोर्ट ईमेल:</strong> support@thedollarmillionspot.com<br><strong>प्लेटफॉर्म ओनर:</strong> Karan Rai</li>
             </ul>
         </div>
     </div>

@@ -1,11 +1,34 @@
-// ================= THREE.JS 10M SPOTS ENGINE =================
+window.openLegalModal = function (modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active'); // क्लास जोड़ते ही मोडल स्क्रीन पर आ जाएगा
+    } else {
+        console.error("Modal not found with ID: " + modalId);
+    }
+};
+
+window.closeLegalModal = function (modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active'); // क्लास हटते ही मोडल छिप जाएगा
+    }
+};
+// ESC की दबाने पर मोडल बंद हो जाएगा
+window.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        const modals = document.querySelectorAll('.legal-modal-overlay, .modal-overlay');
+        modals.forEach(m => m.style.display = 'none');
+    }
+});
 
 // Disable right-click menu everywhere on the page
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
 });
 
-// LIVE CURRENCY FETCHING API
+// LIVE CURRENCY FETCHING API & GLOBAL VARIABLES
+let liveUsdToInrRate = 83.0;
+
 async function fetchLiveCurrencyRates() {
     try {
         const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -18,8 +41,6 @@ async function fetchLiveCurrencyRates() {
     }
     updateDynamicPrices();
 }
-
-let liveUsdToInrRate = 83.0;
 
 function updateDynamicPrices() {
     const fixedUsdPremium = 1050;
@@ -196,14 +217,12 @@ function closeBuyModal() {
     if (buyModal) buyModal.style.display = 'none';
 }
 
-// EVENT DELEGATION FOR BUY SUBMIT BUTTON (सुधरा हुआ कोड जो सीधे यूजर का असली लिंक पकड़ेगा)
+// EVENT DELEGATION FOR BUY SUBMIT BUTTON
 document.addEventListener('click', (event) => {
     if (event.target && event.target.id === 'btnPaySubmit') {
         event.preventDefault();
 
         const fileInput = document.querySelector('input[type="file"]');
-
-        // यूजर द्वारा दर्ज किए गए लिंक को सही से पकड़ने के लिए सभी संभावित इनपुट आईडी की जाँच
         const urlInput = document.getElementById('userTargetUrl') ||
             document.getElementById('targetUrlInput') ||
             document.getElementById('urlInput') ||
@@ -248,7 +267,7 @@ document.addEventListener('click', (event) => {
         reader.readAsDataURL(imageFile);
     }
 });
-// ================= THREE.JS 10M SPOTS ENGINE (CONTINUED) =================
+// ================= THREE.JS 10M SPOTS ENGINE =================
 const MAX_NORMAL_SPOTS = 10000000;
 let currentNormalSpotsFilled = 0;
 let spaceScene, spaceCamera, spaceRenderer;
@@ -397,12 +416,17 @@ function setupNormalCounterUI() {
                     return;
                 }
 
-                const foundMesh = activeMeshPool.find(m => m.userData.hasData && m.userData.brandName && m.userData.brandName.toLowerCase().includes(query));
+                let foundMesh = activeMeshPool.find(m => m.userData.hasData && m.userData.brandName && m.userData.brandName.toLowerCase().includes(query));
 
                 if (foundMesh) {
                     showSimplePopupCard(foundMesh.userData.brandName, foundMesh.material.map.image.src, foundMesh.userData.targetUrl);
                 } else {
-                    alert('Logo not found currently in active space stream! Try another name or wait for it to appear.');
+                    let foundQueueItem = spaceLogoQueue.find(item => item.name && item.name.toLowerCase().includes(query));
+                    if (foundQueueItem) {
+                        showSimplePopupCard(foundQueueItem.name, foundQueueItem.logo, foundQueueItem.url);
+                    } else {
+                        alert('इस नाम से कोई स्पॉट नहीं मिला! कृपया सही नाम दर्ज करें।');
+                    }
                 }
             };
 
@@ -491,9 +515,56 @@ function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
 
     closeBuyModal();
     renderBoard();
+    showLuxuryCongratulationPopup(brandName, logoDataUrl);
 }
 
-// --- साधारण पॉपअप (ब्रांड लोगो और असली विज़िट लिंक के साथ) ---
+// --- लग्जरी 'Congratulations' पॉपअप ---
+function showLuxuryCongratulationPopup(brandName, logoUrl) {
+    const oldPopup = document.getElementById('luxuryCongratPopup');
+    if (oldPopup) oldPopup.remove();
+
+    const popupHTML = `
+        <div id="luxuryCongratPopup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter: blur(10px); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999999; animation: fadeIn 0.4s ease;">
+            
+            <div style="text-align:center; margin-bottom: 20px; animation: slideDown 0.5s ease;">
+                <div style="font-size: 13px; letter-spacing: 4px; color: #ffd700; font-weight: bold; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,215,0,0.6);">✨ Elite Spot Booked ✨</div>
+                <h1 style="color: #fff; font-size: 32px; font-weight: 900; margin: 5px 0; text-shadow: 0 0 20px rgba(255,215,0,0.8); letter-spacing: 2px;">CONGRATULATIONS!</h1>
+                <p style="color: #eedc9a; font-size: 15px; margin: 0; font-style: italic;">आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है</p>
+            </div>
+
+            <div style="position: relative; width: 220px; height: 310px; background: linear-gradient(135deg, #FBF4DB 0%, #EEDC9A 50%, #D4BE75 100%); border: 3px solid #ffd700; border-radius: 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 15px; box-shadow: 0 0 60px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.6); transform: scale(0.8); animation: cardPopupZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
+                
+                <div style="position:absolute; top:12px; left:14px; font-size:12px; font-weight:bold; color:#554400;">#VIP</div>
+
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex-grow:1; width:100%;">
+                    <div style="display:flex; align-items:center; justify-content:center; height:110px; margin-bottom:12px;">
+                        <img src="${logoUrl}" alt="${brandName}" style="max-width:110px; max-height:110px; width:auto; height:auto; object-fit:contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                    </div>
+                    <div style="font-size:20px; font-weight:900; color:#000; text-shadow: 0px 1px 3px rgba(255, 215, 0, 0.9); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; letter-spacing: 0.5px;">${brandName}</div>
+                </div>
+            </div>
+
+        </div>
+        <style>
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+            @keyframes cardPopupZoom { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        </style>
+    `;
+    document.body.insertAdjacentHTML('beforeend', popupHTML);
+
+    setTimeout(() => {
+        const popup = document.getElementById('luxuryCongratPopup');
+        if (popup) {
+            popup.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            popup.style.opacity = '0';
+            popup.style.transform = 'scale(1.05)';
+            setTimeout(() => popup.remove(), 400);
+        }
+    }, 3000);
+}
+
+// --- साधारण पॉपअप ---
 function showSimplePopupCard(brandName, logoUrl, targetUrl) {
     const existingPopup = document.getElementById('simpleSpacePopup');
     if (existingPopup) existingPopup.remove();
@@ -502,16 +573,13 @@ function showSimplePopupCard(brandName, logoUrl, targetUrl) {
         <div id="simpleSpacePopup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:99999; backdrop-filter: blur(3px);">
             <div style="background: #1a1a1a; border: 2px solid #444; border-radius: 12px; padding: 20px; width: 280px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.8); font-family: sans-serif; position: relative;">
                 
-                <!-- Close Button -->
                 <button onclick="document.getElementById('simpleSpacePopup').remove()" style="position:absolute; top:8px; right:10px; background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;">✕</button>
 
-                <!-- Logo & Brand Name -->
                 <div style="background: #111; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 1px solid #333;">
                     <img src="${logoUrl}" style="max-width: 70px; max-height: 70px; object-fit: contain;">
                     <div style="font-size: 14px; font-weight: bold; color: #fff; margin-top: 6px;">${brandName}</div>
                 </div>
 
-                <!-- Visit Link (Directly opens user's actual link) -->
                 <a href="${targetUrl}" target="_blank" style="display:block; background: #007bff; color: #fff; text-decoration: none; border-radius: 6px; padding: 10px; font-size: 13px; font-weight: bold; word-break: break-all; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
                     Visit Website ↗
                 </a>
@@ -522,45 +590,68 @@ function showSimplePopupCard(brandName, logoUrl, targetUrl) {
     document.body.insertAdjacentHTML('beforeend', popupHTML);
 }
 
-// Raycaster & Interaction Handler for 3D Space Logos
+// Raycaster & Interaction Handler for 3D Space Logos (इसे ऐसा रखें)
 const raycaster = new THREE.Raycaster();
 const mouseVector = new THREE.Vector2();
 
-document.write = document.write || function () { };
+const gridContainer = document.getElementById('pixelBoardGrid');
+if (gridContainer) {
+    gridContainer.addEventListener('click', (event) => {
+        if (!spaceRenderer || !spaceCamera) return;
 
-document.addEventListener('click', (event) => {
-    const gridContainer = document.getElementById('pixelBoardGrid');
-    if (!gridContainer || !spaceRenderer || !spaceCamera) return;
+        const rect = spaceRenderer.domElement.getBoundingClientRect();
+        if (
+            event.clientX >= rect.left && event.clientX <= rect.right &&
+            event.clientY >= rect.top && event.clientY <= rect.bottom
+        ) {
+            mouseVector.x = ((event.clientX - rect.left) / gridContainer.clientWidth) * 2 - 1;
+            mouseVector.y = -((event.clientY - rect.top) / gridContainer.clientHeight) * 2 + 1;
 
-    const rect = spaceRenderer.domElement.getBoundingClientRect();
-    if (
-        event.clientX >= rect.left && event.clientX <= rect.right &&
-        event.clientY >= rect.top && event.clientY <= rect.bottom
-    ) {
-        mouseVector.x = ((event.clientX - rect.left) / gridContainer.clientWidth) * 2 - 1;
-        mouseVector.y = -((event.clientY - rect.top) / gridContainer.clientHeight) * 2 + 1;
+            raycaster.setFromCamera(mouseVector, spaceCamera);
+            const intersects = raycaster.intersectObjects(activeMeshPool);
 
-        raycaster.setFromCamera(mouseVector, spaceCamera);
+            if (intersects.length > 0) {
+                const clickedMesh = intersects[0].object;
+                if (clickedMesh.userData && clickedMesh.userData.hasData) {
+                    if (!clickedMesh.userData.isPaused) {
+                        clickedMesh.userData.isPaused = true;
+                        showSimplePopupCard(clickedMesh.userData.brandName, clickedMesh.material.map.image.src, clickedMesh.userData.targetUrl);
 
-        const intersects = raycaster.intersectObjects(activeMeshPool);
-
-        if (intersects.length > 0) {
-            const clickedMesh = intersects[0].object;
-            if (clickedMesh.userData && clickedMesh.userData.hasData) {
-                if (!clickedMesh.userData.isPaused) {
-                    clickedMesh.userData.isPaused = true;
-                    showSimplePopupCard(clickedMesh.userData.brandName, clickedMesh.material.map.image.src, clickedMesh.userData.targetUrl);
-
-                    clearTimeout(clickedMesh.userData.resumeTimeout);
-                    clickedMesh.userData.resumeTimeout = setTimeout(() => {
-                        clickedMesh.userData.isPaused = false;
-                    }, 5000);
-                } else {
-                    if (clickedMesh.userData.targetUrl) {
-                        window.open(clickedMesh.userData.targetUrl, '_blank');
+                        clearTimeout(clickedMesh.userData.resumeTimeout);
+                        clickedMesh.userData.resumeTimeout = setTimeout(() => {
+                            clickedMesh.userData.isPaused = false;
+                        }, 5000);
+                    } else {
+                        if (clickedMesh.userData.targetUrl) {
+                            window.open(clickedMesh.userData.targetUrl, '_blank');
+                        }
                     }
                 }
             }
         }
-    }
+    });
+}
+// ऑटो-फिक्स क्लिक्स के लिए
+document.addEventListener("DOMContentLoaded", () => {
+    // हेडर लिंक्स मैपिंग
+    const linkMap = {
+        "$1 Spot": "dollarSpotModal",
+        "Premium Board": "navPremiumModal",
+        "How It Works": "howItWorksModal",
+        "Terms & Conditions": "termsModal",
+        "Privacy Policy": "privacyModal",
+        "Refund Policy": "refundModal",
+        "Contact Us": "contactModal"
+    };
+
+    document.querySelectorAll("a").forEach(anchor => {
+        const text = anchor.innerText.trim();
+        if (linkMap[text]) {
+            anchor.setAttribute("href", "javascript:void(0);");
+            anchor.onclick = (e) => {
+                e.preventDefault();
+                openLegalModal(linkMap[text]);
+            };
+        }
+    });
 });
