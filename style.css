@@ -2,12 +2,16 @@
    🏆 THE DOLLAR MILLION SPOT - OFFICIAL STYLE SHEET 🏆
    ======================================================= */
 
-/* GLOBAL STYLES & RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Arial, sans-serif;
+    /* 🚨 टेक्स्ट सिलेक्शन को पूरी तरह ब्लॉक और स्क्रीन लॉक करने का कोड */
+    user-select: none !important;
+    -webkit-user-select: none !important; /* क्रोम और सफारी के लिए */
+    -moz-user-select: none !important; /* फ़ायरफ़ॉक्स के लिए */
+    -ms-user-select: none !important; /* इंटरनेट एक्सप्लोरर के लिए */
 }
 
 body {
@@ -15,13 +19,10 @@ body {
     color: #ffffff;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start !important; /* 🚨 यह पूरे प्रोजेक्ट को सबसे ऊपर चिपका देगा */
+    padding: 10px !important; /* ऊपर से सही गैप रखेगा */
     min-height: 100vh;
     width: 100%;
-    margin: 0;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow-x: hidden;
 }
 
 /* --- MAIN LAYOUT STRUCTURE --- */
@@ -652,89 +653,117 @@ body {
         pointer-events: auto !important;
     }
 /* =======================================================
-   👑 फॉर्म पॉपअप को पुरानी फोटो की तरह परफेक्ट करने का असली फिक्स 👑
+   🏆 द डॉलर मून स्पॉट - सभी पॉपअप को ऑटो-बड़ा और एक्टिव करने का फिक्स 🏆
    ======================================================= */
 
-/* १. पॉपअप के पीछे का घना काला पर्दा और धुंधलापन */
-.modal-overlay {
+/* १. सभी पॉपअप के पीछे का घना काला पर्दा और धुंधलापन (Blur) */
+.modal-overlay,
+.legal-modal-overlay {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(0, 0, 0, 0.85) !important; /* गहरा काला पर्दा */
-    backdrop-filter: blur(8px) !important; /* पीछे के ग्रह धुंधले */
-    -webkit-backdrop-filter: blur(8px) !important;
+    background: rgba(0, 0, 0, 0.88) !important; /* गहरा शाही काला पर्दा */
+    backdrop-filter: blur(10px) !important; /* पीछे की वेबसाइट पूरी धुंधली */
+    -webkit-backdrop-filter: blur(10px) !important;
     display: none;
     align-items: center !important;
     justify-content: center !important;
-    z-index: 9999999 !important; /* सबसे ऊपर लॉक */
+    z-index: 9999999 !important; /* ब्रह्मांड में सबसे ऊपर */
+    padding: 15px !important;
 }
 
-/* २. मुख्य पॉपअप बॉक्स का सॉलिड काला रंग, चौड़ाई और सुनहरी सोने का मुख्य बॉर्डर */
-.modal-box, div.modal-box, #buyModal .modal-box {
-    background: #15151a !important; /* असली गहरा सॉलिड काला */
-    border: 3.5px solid #ffd700 !important; /* चमकीला मुख्य सोने का बॉर्डर */
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.35) !important; /* रॉयल गोल्ड ग्लो */
-    border-radius: 16px !important;
-    width: 480px !important; /* पुरानी फोटो जैसी परफेक्ट आलीशान चौड़ाई */
-    max-width: 90% !important;
-    max-height: 85vh !important;
-    overflow-y: auto !important; /* अंदर की स्क्रॉलिंग चालू */
+/* २. मुख्य बाय फॉर्म पॉपअप (Buy Spot / Premium) - इसे ऑटो-बड़ा और रिस्पॉन्सिव किया */
+.modal-box,
+div.modal-box,
+#buyModal .modal-box {
+    background: #15151a !important;
+    border: 3.5px solid #ffd700 !important; /* कड़क सोने का मुख्य बॉर्डर */
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
+    border-radius: 20px !important;
+    /* 🚨 ऑटो-बड़ा साइज: लैपटॉप पर ४८० पिक्सेल चौड़ा और मोबाइल पर पूरी स्क्रीन के बराबर */
+    width: 600px !important;
+    height: 650px !important;
+    max-width: 95% !important;
+    max-height: 90vh !important; /* स्क्रीन से बाहर कभी नहीं भागेगा */
+    overflow-y: auto !important; /* बड़ी स्क्रीन या छोटे फोन में अंदर ही स्क्रॉल होगा */
+
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) !important; /* स्क्रीन के बिल्कुल सेंटर में जकड़ने के लिए */
+    transform: translate(-50%, -50%) !important; /* स्क्रीन के बिल्कुल सेंटर में लॉक */
     margin: 0 !important;
-    padding: 25px !important;
+    padding: 28px 25px !important; /* अंदर का स्पेस खुला-खुला किया */
     z-index: 10000000 !important;
+    pointer-events: auto !important; /* 🚨 सबसे बड़ा फिक्स: सारे क्लिक अब १००% काम करेंगे */
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important; /* अंदर के डिब्बों में गैप */
+    gap: 12px !important;
 }
 
-    /* ३. अंदर की लिखावट का पुराना साफ़-सुथरा (Clean Small Text) लुक */
-    .modal-box label {
-        font-size: 11px !important; /* अक्षरों को वापस छोटा और शांत किया */
-        color: #cccccc !important;
-        font-weight: 700 !important; /* फालतू मोटाई कम की */
-        margin-bottom: -2px !important;
-        display: block !important;
-        text-align: left !important;
-        text-transform: none !important;
-    }
+/* ३. लीगल पॉपअप (Terms, Privacy, Refund, Contact, How it works) - इसे भी ऑटो-बड़ा किया */
+.legal-modal-box {
+    background: #15151a !important;
+    color: #ffffff !important;
+    border: 3.5px solid #ffd700 !important; /* कड़क सोने का बॉर्डर */
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
+    border-radius: 20px !important;
+    /* 🚨 लीगल पॉपअप को पढ़ने के लिए और बड़ा (६८० पिक्सेल) किया ताकि आसानी से दिखे */
+    width: 680px !important;
+    max-width: 95% !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    padding: 35px 30px !important;
+    position: relative !important;
+    z-index: 10000000 !important;
+    pointer-events: auto !important; /* 🚨 क्लिक पूरी तरह चालू */
+}
 
-    /* नाम, फाइल और लिंक वाले इनपुट बॉक्स का असली चौड़ाई फिक्स */
-    .modal-box input[type="text"],
-    .modal-box input[type="file"],
-    #inputBrandName,
-    #userTargetUrl,
-    #inputLogoFile {
-        background: #1f1f28 !important;
-        border: 1px solid #3a3a48 !important; /* सोने का फालतू बॉर्डर हटाकर नॉर्मल किया */
-        color: #ffffff !important;
-        padding: 8px 10px !important; /* अंदर का स्पेस परफेक्ट किया */
-        border-radius: 8px !important;
-        font-size: 14px !important;
-        width: 100% !important; /* पूरी चौड़ाई में फैलने के लिए फिक्स */
-        font-weight: 500 !important;
-        display: block !important;
-    }
+/* ४. अंदर की लिखावट को साफ-सुथरा और सुडौल रखने की सेटिंग */
+.modal-box label {
+    font-size: 11.5px !important;
+    color: #cccccc !important;
+    font-weight: 700 !important;
+    margin-bottom: -4px !important;
+    display: block !important;
+    text-align: left !important;
+    pointer-events: auto !important;
+}
 
-/* ४. पेमेंट ऑप्शंस वाले पूरे डिब्बे का फिक्स */
+/* इनपुट फील्ड्स को पूरी चौड़ाई में बड़ा और भरने में आसान बनाना */
+.modal-box input[type="text"],
+.modal-box input[type="file"],
+#inputBrandName,
+#userTargetUrl,
+#inputLogoFile {
+    background: #1f1f28 !important;
+    border: 1px solid #3a3a48 !important;
+    color: #ffffff !important;
+    padding: 10px 12px !important; /* इनपुट बॉक्स को थोड़ा बड़ा किया भरने के लिए */
+    border-radius: 8px !important;
+    font-size: 14.5px !important;
+    width: 100% !important; /* पूरा फैलने के लिए */
+    font-weight: 600 !important;
+    display: block !important;
+    pointer-events: auto !important;
+}
+
+/* ५. पेमेंट वाले हिस्से को साफ और रिस्पॉन्सिव बनाना */
 .payment-options {
     background: #1c1c24 !important;
-    border: none !important; /* फालतू बॉर्डर गायब */
+    border: none !important;
     padding: 12px !important;
     border-radius: 8px !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
     width: 100% !important;
+    pointer-events: auto !important;
 }
 
 .payment-group-title {
-    font-size: 10.5px !important; /* शीर्षक छोटा और साफ़ किया */
+    font-size: 11px !important;
     color: #f3c258 !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
@@ -742,36 +771,41 @@ body {
     margin-top: 4px !important;
 }
 
-/* ५. पेमेंट ग्रिड (UPI Options) को वापस अपनी असली दो कॉलम वाली जगह पर लाना */
 .payment-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important; /* दो कॉलम में सेट */
+    grid-template-columns: repeat(2, 1fr) !important; /* दो कॉलम ग्रिड मोबाइल-लैपटॉप दोनों पर फिक्स */
     gap: 8px !important;
     width: 100% !important;
 }
 
-/* छोटे-छोटे पेमेंट बटनों के टेक्स्ट और डिब्बे का क्लिन फिक्स */
 .pay-option {
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
     background: #23232e !important;
-    padding: 6px 8px !important; /* डिब्बे छोटे और सुडौल किए */
+    padding: 8px 10px !important;
     border-radius: 6px !important;
-    font-size: 13px !important; /* लिखावट छोटी और क्लिन की */
+    font-size: 13.5px !important;
     color: #ffffff !important;
-    border: 1px solid #383846 !important; /* फालतू गोल्ड बॉर्डर साफ़ */
+    border: 1px solid #383846 !important;
     font-weight: 700 !important;
     width: 100% !important;
     cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
-/* ६. मुख्य पीले 'Pay' बटन and 'Cancel' बटन की लिखावट का फिक्स */
+    .pay-option input {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+    }
+
+/* ६. बटनों को पूरी चौड़ाई में बड़ा और चमकदार बनाना */
 .modal-actions {
     display: flex !important;
     gap: 12px !important;
     margin-top: 10px !important;
     width: 100% !important;
+    pointer-events: auto !important;
 }
 
 .btn-pay-now {
@@ -779,22 +813,55 @@ body {
     background: linear-gradient(180deg, #ffd700 0%, #b58212 100%) !important;
     color: #000000 !important;
     border: 1.5px solid #ffffff !important;
-    padding: 10px !important;
+    padding: 12px !important; /* बटन को दबाने में आसान और बड़ा किया */
     border-radius: 8px !important;
     font-weight: 900 !important;
-    font-size: 15px !important; /* लिखावट वापस पुरानी क्लिन की */
+    font-size: 16px !important;
     cursor: pointer !important;
     box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;
     text-transform: uppercase !important;
+    pointer-events: auto !important;
 }
 
 .btn-cancel {
     background: #33333d !important;
     color: #ffffff !important;
     border: 1px solid #555566 !important;
-    padding: 10px 14px !important;
+    padding: 12px 18px !important;
     border-radius: 8px !important;
     cursor: pointer !important;
     font-weight: 700 !important;
     font-size: 14px !important;
+    pointer-events: auto !important;
+}
+
+.legal-modal-box h2 {
+    color: #ffd700 !important;
+    margin-top: 0 !important;
+    text-align: center !important;
+    font-size: 24px !important;
+    border-bottom: 1.5px solid #ffd700 !important;
+    padding-bottom: 15px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+}
+
+.legal-modal-box li {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #e0e0e0 !important;
+    font-weight: 600 !important;
+}
+
+.legal-close-btn {
+    position: absolute !important;
+    top: 15px !important;
+    right: 20px !important;
+    background: none !important;
+    border: none !important;
+    color: #ffd700 !important;
+    font-size: 32px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    pointer-events: auto !important;
 }
