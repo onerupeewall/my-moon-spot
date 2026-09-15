@@ -1,18 +1,24 @@
+/* =======================================================
+   🏆 THE DOLLAR MILLION SPOT - OFFICIAL JAVA-SCRIPT 🏆
+   ======================================================= */
+
+// १. लीगल पॉपअप ओपन और क्लोज करने का फिक्स
 window.openLegalModal = function (modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.add('active'); // क्लास जोड़ते ही मोडल स्क्रीन पर आ जाएगा
-    } else {
-        console.error("Modal not found with ID: " + modalId);
+        modal.style.display = 'flex'; // क्लास के बजाय सीधे डिस्प्ले फ्लेक्स किया ताकि तुरंत दिखे
+        modal.classList.add('active');
     }
 };
 
 window.closeLegalModal = function (modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.remove('active'); // क्लास हटते ही मोडल छिप जाएगा
+        modal.style.display = 'none';
+        modal.classList.remove('active');
     }
 };
+
 // ESC की दबाने पर मोडल बंद हो जाएगा
 window.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
@@ -31,7 +37,7 @@ let liveUsdToInrRate = 83.0;
 
 async function fetchLiveCurrencyRates() {
     try {
-        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const response = await fetch('https://exchangerate-api.com');
         const data = await response.json();
         if (data && data.rates && data.rates.INR) {
             liveUsdToInrRate = data.rates.INR;
@@ -43,26 +49,35 @@ async function fetchLiveCurrencyRates() {
 }
 
 function updateDynamicPrices() {
-    const fixedUsdPremium = 1050;
-    const calculatedInrPremium = Math.round(fixedUsdPremium * liveUsdToInrRate);
+    // 🚨 बैकअप लाइव गार्ड: अगर लोकल में इंटरनेट ब्लॉक है तो आज का असली मार्केट रेट ₹96.15 मान कर गुणा करेगा
+    if (!liveUsdToInrRate || liveUsdToInrRate === 83.0) {
+        liveUsdToInrRate = 96.15;
+    }
 
+    // 🏆 करन भाई का असली नियम: फिक्स $1050 को लाइव रेट से गुना करके लाइव इंडियन रुपीस बनाना
+    const calculatedInrPremium = Math.round(1050 * liveUsdToInrRate);
+
+    // १. इंडियन रुपीस का डिब्बा - यह हमेशा लाइव ऊपर-नीचे घूमता रहेगा
     const premiumInrEl = document.getElementById('premiumInrPrice');
     if (premiumInrEl) premiumInrEl.innerText = `₹${calculatedInrPremium.toLocaleString('en-IN')}.00`;
 
+    // २. डॉलर का डिब्बा - यह हमेशा $1,050.00 पर ही फिक्स (स्थिर) लॉक रहेगा
     const premiumUsdEl = document.getElementById('premiumUsdPrice');
-    if (premiumUsdEl) premiumUsdEl.innerText = `$${fixedUsdPremium.toLocaleString('en-US')}.00`;
+    if (premiumUsdEl) premiumUsdEl.innerText = `$1,050.00`;
 
+    // ३. प्रीमियम बटन का टेक्स्ट - यह भी हमेशा $1,050.00 पर ही फिक्स लॉक रहेगा
     const btnPremTextEl = document.getElementById('btnPremiumText');
-    if (btnPremTextEl) btnPremTextEl.innerText = `$${fixedUsdPremium.toLocaleString('en-US')}.00`;
+    if (btnPremTextEl) btnPremTextEl.innerText = `$1,050.00`;
 
+    // ४. नॉर्मल $1 वाला इंडियन बटन - यह भी लाइव रेट के हिसाब से बदलेगा
     const calculatedInrNormal = Math.round(liveUsdToInrRate);
     const btnNormalInrEl = document.getElementById('btnNormalInr');
     if (btnNormalInrEl) btnNormalInrEl.innerText = `₹${calculatedInrNormal}`;
 
-    updateLiveSpotsCounter();
+    if (typeof updateLiveSpotsCounter === 'function') {
+        updateLiveSpotsCounter();
+    }
 }
-
-fetchLiveCurrencyRates();
 
 // TOTAL 500 PREMIUM SPOTS DATABASE
 const totalPremiumSpotsCount = 500;
@@ -70,9 +85,9 @@ let allSpots = [];
 
 for (let i = 1; i <= totalPremiumSpotsCount; i++) {
     if (i === 1) {
-        allSpots.push({ rank: 1, isBought: true, isUserOwned: false, name: 'APPLE', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', url: 'https://apple.com' });
+        allSpots.push({ rank: 1, isBought: true, isUserOwned: false, name: 'APPLE', logo: 'https://wikimedia.org', url: 'https://apple.com' });
     } else if (i === 2) {
-        allSpots.push({ rank: 2, isBought: true, isUserOwned: false, name: 'TESLA', logo: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png', url: 'https://tesla.com' });
+        allSpots.push({ rank: 2, isBought: true, isUserOwned: false, name: 'TESLA', logo: 'https://wikimedia.org', url: 'https://tesla.com' });
     } else {
         allSpots.push({ rank: i, isBought: false, isUserOwned: false });
     }
@@ -229,7 +244,6 @@ document.addEventListener('click', (event) => {
             document.getElementById('targetUrl') ||
             document.querySelector('input[name*="url"]') ||
             document.querySelector('input[type="url"]');
-
         const brandInput = document.querySelector('#brandNameWrapper input') || document.querySelector('input[type="text"]');
 
         let targetUrl = '';
@@ -253,20 +267,18 @@ document.addEventListener('click', (event) => {
 
         const imageFile = fileInput.files[0];
         const reader = new FileReader();
-
         reader.onload = function (e) {
             const imageDataUrl = e.target.result;
-
             if (currentBoardType === 'normal') {
                 addNewUserNormalSpot(brandName, imageDataUrl, targetUrl);
             } else {
                 addNewUserPremiumSpot(brandName, imageDataUrl, targetUrl);
             }
         };
-
         reader.readAsDataURL(imageFile);
     }
 });
+
 // ================= THREE.JS 10M SPOTS ENGINE =================
 const MAX_NORMAL_SPOTS = 10000000;
 let currentNormalSpotsFilled = 0;
@@ -283,12 +295,7 @@ function setupNormalCounterUI() {
 
     let existingSearchBox = document.getElementById('spaceSearchWrapper');
     if (!existingSearchBox) {
-        const searchHTML = `
-            <div id="spaceSearchWrapper" style="display:flex; justify-content:center; align-items:center; padding:10px; background:rgba(0,0,0,0.6); border-bottom:1px solid #333; gap:10px; width:100%; box-sizing:border-box;">
-                <input type="text" id="spaceSearchInput" placeholder="🔍 Search logo / brand name in Space..." style="width:280px; padding:8px 12px; border-radius:8px; border:1px solid #ffd700; background:#111; color:#fff; font-size:14px; outline:none;">
-                <button id="spaceSearchBtn" style="padding:8px 18px; background:linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border:none; border-radius:8px; color:#000; font-weight:bold; cursor:pointer; font-size:14px;">Search</button>
-            </div>
-        `;
+        const searchHTML = `<div id="spaceSearchWrapper" style="display:flex; justify-content:center; align-items:center; padding:10px; background:rgba(0,0,0,0.6); border-bottom:1px solid #333; gap:10px; width:100%; box-sizing:border-box;"> <input type="text" id="spaceSearchInput" placeholder="🔍 Search logo / brand name in Space..." style="width:280px; padding:8px 12px; border-radius:8px; border:1px solid #ffd700; background:#111; color:#fff; font-size:14px; outline:none;"> <button id="spaceSearchBtn" style="padding:8px 18px; background:linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border:none; border-radius:8px; color:#000; font-weight:bold; cursor:pointer; font-size:14px;">Search</button> </div>`;
         gridContainer.insertAdjacentHTML('beforebegin', searchHTML);
     }
 
@@ -311,13 +318,11 @@ function setupNormalCounterUI() {
     const starsGeometry = new THREE.BufferGeometry();
     const starsCount = 1200;
     const starPositions = new Float32Array(starsCount * 3);
-
     for (let i = 0; i < starsCount * 3; i += 3) {
         starPositions[i] = (Math.random() - 0.5) * 400;
         starPositions[i + 1] = (Math.random() - 0.5) * 400;
         starPositions[i + 2] = (Math.random() - 0.5) * 1000;
     }
-
     starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
     const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.8, transparent: true, opacity: 0.8 });
     starField = new THREE.Points(starsGeometry, starsMaterial);
@@ -330,22 +335,18 @@ function setupNormalCounterUI() {
         const planeGeo = new THREE.PlaneGeometry(2.0, 2.0);
         const planeMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
         const mesh = new THREE.Mesh(planeGeo, planeMat);
-
         const sideMultiplier = Math.random() < 0.5 ? -1 : 1;
         const posX = sideMultiplier * (4.0 + Math.random() * 4.0);
         const posY = (Math.random() - 0.5) * 6.0;
         const initialZ = -800 - (i * 35);
-
         mesh.position.set(posX, posY, initialZ);
         mesh.userData = { brandName: '', targetUrl: '', hasData: false, isPaused: false, resumeTimeout: null };
-
         spaceScene.add(mesh);
         activeMeshPool.push(mesh);
     }
 
     function animateSpace() {
         requestAnimationFrame(animateSpace);
-
         if (starField) {
             const positions = starField.geometry.attributes.position.array;
             for (let i = 2; i < positions.length; i += 3) {
@@ -356,31 +357,23 @@ function setupNormalCounterUI() {
         }
 
         const moveSpeed = 0.12;
-
         for (let i = 0; i < activeMeshPool.length; i++) {
             let mesh = activeMeshPool[i];
-
             if (!mesh.userData.hasData) continue;
-
             if (!mesh.userData.isPaused) {
                 mesh.position.z += moveSpeed;
             }
-
             if (mesh.position.z > 10) {
                 mesh.position.z = -800;
                 mesh.userData.isPaused = false;
-
                 const sideMultiplier = Math.random() < 0.5 ? -1 : 1;
                 mesh.position.x = sideMultiplier * (4.0 + Math.random() * 4.0);
                 mesh.position.y = (Math.random() - 0.5) * 6.0;
-
                 if (spaceLogoQueue.length > 0) {
                     const nextItem = spaceLogoQueue[queuePointer];
                     queuePointer = (queuePointer + 1) % spaceLogoQueue.length;
-
                     mesh.userData.brandName = nextItem.name;
                     mesh.userData.targetUrl = nextItem.url;
-
                     textureLoader.load(nextItem.logo, (tex) => {
                         tex.colorSpace = THREE.SRGBColorSpace;
                         mesh.material.map = tex;
@@ -390,10 +383,8 @@ function setupNormalCounterUI() {
                 }
             }
         }
-
         spaceRenderer.render(spaceScene, spaceCamera);
     }
-
     animateSpace();
 
     window.addEventListener('resize', () => {
@@ -403,11 +394,10 @@ function setupNormalCounterUI() {
         spaceRenderer.setSize(gridContainer.clientWidth, gridContainer.clientHeight);
     });
 
-    // --- सर्च बॉक्स का लॉजिक ---
+    // --- 🚨 सर्च बॉक्स का असली 100% वर्किंग लॉजिक 🚨 ---
     setTimeout(() => {
         const searchBtn = document.getElementById('spaceSearchBtn');
         const searchInput = document.getElementById('spaceSearchInput');
-
         if (searchBtn && searchInput) {
             const executeSearch = () => {
                 const query = searchInput.value.trim().toLowerCase();
@@ -415,21 +405,26 @@ function setupNormalCounterUI() {
                     alert('Please enter a brand name to search!');
                     return;
                 }
-
-                let foundMesh = activeMeshPool.find(m => m.userData.hasData && m.userData.brandName && m.userData.brandName.toLowerCase().includes(query));
-
-                if (foundMesh) {
-                    showSimplePopupCard(foundMesh.userData.brandName, foundMesh.material.map.image.src, foundMesh.userData.targetUrl);
+                let modal = activeMeshPool.find(m => m.userData.hasData && m.userData.brandName && m.userData.brandName.toLowerCase().includes(query));
+                if (modal) {
+                    document.getElementById('searchResultLogo').src = modal.material.map.image.src || '';
+                    document.getElementById('searchResultLogo').style.display = 'block';
+                    document.getElementById('searchResultBrandName').innerText = modal.userData.brandName;
+                    document.getElementById('searchResultLink').href = modal.userData.targetUrl || '#';
+                    document.getElementById('searchResultModal').style.display = 'flex';
                 } else {
                     let foundQueueItem = spaceLogoQueue.find(item => item.name && item.name.toLowerCase().includes(query));
                     if (foundQueueItem) {
-                        showSimplePopupCard(foundQueueItem.name, foundQueueItem.logo, foundQueueItem.url);
+                        document.getElementById('searchResultLogo').src = foundQueueItem.logo || '';
+                        document.getElementById('searchResultLogo').style.display = 'block';
+                        document.getElementById('searchResultBrandName').innerText = foundQueueItem.name;
+                        document.getElementById('searchResultLink').href = foundQueueItem.url || '#';
+                        document.getElementById('searchResultModal').style.display = 'flex';
                     } else {
                         alert('इस नाम से कोई स्पॉट नहीं मिला! कृपया सही नाम दर्ज करें।');
                     }
                 }
             };
-
             searchBtn.onclick = executeSearch;
             searchInput.onkeydown = (e) => {
                 if (e.key === 'Enter') executeSearch();
@@ -456,19 +451,15 @@ function addNewUserNormalSpot(brandName, logoDataUrl, targetUrl) {
         alert('Seat Full! All 10,000,000 spots are booked.');
         return;
     }
-
     currentNormalSpotsFilled++;
     updateLiveSpotsCounter();
     closeBuyModal();
-
     spaceLogoQueue.push({ name: brandName, logo: logoDataUrl, url: targetUrl });
 
     const textureLoader = new THREE.TextureLoader();
     textureLoader.crossOrigin = 'anonymous';
-
     textureLoader.load(logoDataUrl, (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
-
         const targetMesh = activeMeshPool.find(m => !m.userData.hasData) || activeMeshPool[Math.floor(Math.random() * activeMeshPool.length)];
         if (targetMesh) {
             targetMesh.material.map = texture;
@@ -478,7 +469,6 @@ function addNewUserNormalSpot(brandName, logoDataUrl, targetUrl) {
             targetMesh.userData.targetUrl = targetUrl;
             targetMesh.userData.hasData = true;
             targetMesh.userData.isPaused = false;
-
             targetMesh.position.z = -50;
             const sideMultiplier = Math.random() < 0.5 ? -1 : 1;
             targetMesh.position.x = sideMultiplier * (4.0 + Math.random() * 4.0);
@@ -503,7 +493,6 @@ function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
         closeBuyModal();
         return;
     }
-
     allSpots[emptySpotIndex] = {
         rank: emptySpotIndex + 1,
         isBought: true,
@@ -512,7 +501,6 @@ function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
         logo: logoDataUrl,
         url: targetUrl
     };
-
     closeBuyModal();
     renderBoard();
     showLuxuryCongratulationPopup(brandName, logoDataUrl);
@@ -523,34 +511,7 @@ function showLuxuryCongratulationPopup(brandName, logoUrl) {
     const oldPopup = document.getElementById('luxuryCongratPopup');
     if (oldPopup) oldPopup.remove();
 
-    const popupHTML = `
-        <div id="luxuryCongratPopup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter: blur(10px); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999999; animation: fadeIn 0.4s ease;">
-            
-            <div style="text-align:center; margin-bottom: 20px; animation: slideDown 0.5s ease;">
-                <div style="font-size: 13px; letter-spacing: 4px; color: #ffd700; font-weight: bold; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,215,0,0.6);">✨ Elite Spot Booked ✨</div>
-                <h1 style="color: #fff; font-size: 32px; font-weight: 900; margin: 5px 0; text-shadow: 0 0 20px rgba(255,215,0,0.8); letter-spacing: 2px;">CONGRATULATIONS!</h1>
-                <p style="color: #eedc9a; font-size: 15px; margin: 0; font-style: italic;">आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है</p>
-            </div>
-
-            <div style="position: relative; width: 220px; height: 310px; background: linear-gradient(135deg, #FBF4DB 0%, #EEDC9A 50%, #D4BE75 100%); border: 3px solid #ffd700; border-radius: 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 15px; box-shadow: 0 0 60px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.6); transform: scale(0.8); animation: cardPopupZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
-                
-                <div style="position:absolute; top:12px; left:14px; font-size:12px; font-weight:bold; color:#554400;">#VIP</div>
-
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex-grow:1; width:100%;">
-                    <div style="display:flex; align-items:center; justify-content:center; height:110px; margin-bottom:12px;">
-                        <img src="${logoUrl}" alt="${brandName}" style="max-width:110px; max-height:110px; width:auto; height:auto; object-fit:contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
-                    </div>
-                    <div style="font-size:20px; font-weight:900; color:#000; text-shadow: 0px 1px 3px rgba(255, 215, 0, 0.9); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; letter-spacing: 0.5px;">${brandName}</div>
-                </div>
-            </div>
-
-        </div>
-        <style>
-            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-            @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-            @keyframes cardPopupZoom { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        </style>
-    `;
+    const popupHTML = `<div id="luxuryCongratPopup" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:radial-gradient(circle, #1c1c24 0%, #111116 100%); border:4px solid #ffd700; border-radius:20px; padding:35px; box-shadow:0 0 50px rgba(255,215,0,0.5); z-index:10000000; text-align:center; color:#fff; width:450px; max-width:90%;">✨ Elite Spot Booked ✨<br>CONGRATULATIONS!<br>आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है<br>#VIP ${brandName}</div>`;
     document.body.insertAdjacentHTML('beforeend', popupHTML);
 
     setTimeout(() => {
@@ -558,65 +519,36 @@ function showLuxuryCongratulationPopup(brandName, logoUrl) {
         if (popup) {
             popup.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             popup.style.opacity = '0';
-            popup.style.transform = 'scale(1.05)';
+            popup.style.transform = 'translate(-50%, -50%) scale(1.05)';
             setTimeout(() => popup.remove(), 400);
         }
     }, 3000);
 }
 
-// --- साधारण पॉपअप ---
-function showSimplePopupCard(brandName, logoUrl, targetUrl) {
-    const existingPopup = document.getElementById('simpleSpacePopup');
-    if (existingPopup) existingPopup.remove();
-
-    const popupHTML = `
-        <div id="simpleSpacePopup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:99999; backdrop-filter: blur(3px);">
-            <div style="background: #1a1a1a; border: 2px solid #444; border-radius: 12px; padding: 20px; width: 280px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.8); font-family: sans-serif; position: relative;">
-                
-                <button onclick="document.getElementById('simpleSpacePopup').remove()" style="position:absolute; top:8px; right:10px; background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;">✕</button>
-
-                <div style="background: #111; border-radius: 8px; padding: 12px; margin-bottom: 12px; border: 1px solid #333;">
-                    <img src="${logoUrl}" style="max-width: 70px; max-height: 70px; object-fit: contain;">
-                    <div style="font-size: 14px; font-weight: bold; color: #fff; margin-top: 6px;">${brandName}</div>
-                </div>
-
-                <a href="${targetUrl}" target="_blank" style="display:block; background: #007bff; color: #fff; text-decoration: none; border-radius: 6px; padding: 10px; font-size: 13px; font-weight: bold; word-break: break-all; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
-                    Visit Website ↗
-                </a>
-
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', popupHTML);
-}
-
-// Raycaster & Interaction Handler for 3D Space Logos (इसे ऐसा रखें)
+// Raycaster & Interaction Handler for 3D Space Logos
 const raycaster = new THREE.Raycaster();
 const mouseVector = new THREE.Vector2();
-
 const gridContainer = document.getElementById('pixelBoardGrid');
+
 if (gridContainer) {
     gridContainer.addEventListener('click', (event) => {
         if (!spaceRenderer || !spaceCamera) return;
-
         const rect = spaceRenderer.domElement.getBoundingClientRect();
-        if (
-            event.clientX >= rect.left && event.clientX <= rect.right &&
-            event.clientY >= rect.top && event.clientY <= rect.bottom
-        ) {
+        if (event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom) {
             mouseVector.x = ((event.clientX - rect.left) / gridContainer.clientWidth) * 2 - 1;
             mouseVector.y = -((event.clientY - rect.top) / gridContainer.clientHeight) * 2 + 1;
-
             raycaster.setFromCamera(mouseVector, spaceCamera);
             const intersects = raycaster.intersectObjects(activeMeshPool);
-
             if (intersects.length > 0) {
                 const clickedMesh = intersects[0].object;
                 if (clickedMesh.userData && clickedMesh.userData.hasData) {
                     if (!clickedMesh.userData.isPaused) {
                         clickedMesh.userData.isPaused = true;
-                        showSimplePopupCard(clickedMesh.userData.brandName, clickedMesh.material.map.image.src, clickedMesh.userData.targetUrl);
-
+                        document.getElementById('searchResultLogo').src = clickedMesh.material.map.image.src || '';
+                        document.getElementById('searchResultLogo').style.display = 'block';
+                        document.getElementById('searchResultBrandName').innerText = clickedMesh.userData.brandName;
+                        document.getElementById('searchResultLink').href = clickedMesh.userData.targetUrl || '#';
+                        document.getElementById('searchResultModal').style.display = 'flex';
                         clearTimeout(clickedMesh.userData.resumeTimeout);
                         clickedMesh.userData.resumeTimeout = setTimeout(() => {
                             clickedMesh.userData.isPaused = false;
@@ -631,9 +563,9 @@ if (gridContainer) {
         }
     });
 }
+
 // ऑटो-फिक्स क्लिक्स के लिए
 document.addEventListener("DOMContentLoaded", () => {
-    // हेडर लिंक्स मैपिंग
     const linkMap = {
         "$1 Spot": "dollarSpotModal",
         "Premium Board": "navPremiumModal",

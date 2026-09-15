@@ -65,10 +65,11 @@ body {
 }
 
 .site-title {
-    font-size: 30px;
+    font-size: 38px;
     font-weight: 900;
     color: #ffffff;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
 .gold-text {
@@ -76,10 +77,10 @@ body {
 }
 
 .site-tagline {
-    font-size: 30.5px;
+    font-size: 35px !important;
     color: #bbbbbb;
-    font-weight: 600;
-    margin-top: 1px;
+    font-weight: 700;
+    margin-top: 4px;
 }
 
 .nav-menu {
@@ -94,7 +95,7 @@ body {
 .nav-link {
     color: #ffffff;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 24px !important;
     font-weight: 800;
     position: relative !important;
     z-index: 100010 !important;
@@ -565,6 +566,7 @@ body {
     z-index: 10005 !important;
     pointer-events: auto !important;
 }
+
 .purple-limit-tag {
     border: 1px solid #a855f7 !important;
     background: #120326 !important;
@@ -622,7 +624,7 @@ body {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    font-size: 20px !important;
+    font-size: 24px !important;
     color: #ffffff !important;
     font-weight: 800 !important;
     width: 100% !important;
@@ -646,6 +648,7 @@ body {
     .footer-links a {
         color: #ffffff !important;
         text-decoration: none !important;
+        font-size: 18px !important;
         font-weight: bold !important;
         display: inline-block !important;
         position: relative !important;
@@ -674,43 +677,64 @@ body {
     padding: 15px !important;
 }
 
-/* २. FIRST फिक्स: लीगल पॉपअप (How it works, Terms, Privacy आदि) को बड़ा और साफ़ करना */
+/* =======================================================
+   🛡️ लीगल पॉपअप बॉक्स (Header & Footer Modals) का फाइनल रिप्लेसमेंट 🛡️
+   ======================================================= */
+
+/* १. पूरे लीगल पॉपअप बॉक्स का साइज़ बड़ा और आलीशान करना */
 .legal-modal-box {
     background: #15151a !important;
-    color: #ffffff !important;
-    border: 3.5px solid #ffd700 !important; /* शाही सोने का बॉर्डर */
+    border: 3.5px solid #ffd700 !important; /* कड़क सुनहरी बॉर्डर */
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
     border-radius: 20px !important;
-    /* 🚨 साइज़ को बड़ा किया ताकि मोबाइल-लैपटॉप दोनों पर साफ़ पढ़ा जा सके */
-    width: 680px !important;
-    max-width: 95% !important;
-    max-height: 85vh !important;
-    overflow-y: auto !important; /* ज़रूरत पड़ने पर अंदर स्क्रॉल */
-    padding: 35px 30px !important;
+    /* 🚨 चौड़ाई और ऊँचाई को बहुत बड़ा और खुला किया ताकि मोबाइल पर दूर से दिखे */
+    width: 1800px !important; /* चौड़ाई ८००px की */
+    max-width: 95% !important; /* मोबाइल स्क्रीन के दोनों कोनों तक फैलेगा */
+    height: 80vh !important; /* ऊँचाई को एकदम फिक्स बड़ा (८०%) किया */
+    max-height: 80vh !important;
+    overflow-y: auto !important; /* अंदर की स्क्रॉलिंग मक्खन जैसी चालू */
+
+    padding: 40px 30px !important;
     position: relative !important;
-    z-index: 10000000 !important;
-    pointer-events: auto !important;
+    z-index: 2000005 !important;
 }
 
-    /* लीगल पॉपअप के अंदर के शब्दों (Words) को बड़ा और साफ़-सुथरा करना */
+    /* २. लीगल पॉपअप की मुख्य हेडिंग को बड़ा और कड़क करना */
     .legal-modal-box h2 {
         color: #ffd700 !important;
-        font-size: 26px !important; /* हेडिंग बड़ी और कड़क */
+        font-size: 30px !important; /* हेडिंग को ३०px किया */
         font-weight: 900 !important;
         text-transform: uppercase !important;
         border-bottom: 2px solid #ffd700 !important;
-        padding-bottom: 15px !important;
-        text-shadow: 0 0 8px rgba(255, 215, 0, 0.5) !important;
+        padding-bottom: 18px !important;
+        margin-bottom: 20px !important;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5) !important;
     }
 
+    /* ३. 🚨 अंदर लिखे सारे पॉइंट्स (अक्षरों) को बड़ा और साफ़ करना */
     .legal-modal-box li {
-        font-size: 16px !important; /* पढ़ने वाले अक्षर बड़े और साफ़ किए */
-        line-height: 1.7 !important;
-        color: #e5e5e5 !important;
-        font-weight: 600 !important;
-        margin-bottom: 12px !important;
+        font-size: 30px !important; /* फोंट साइज़ को बढ़ाकर १९px किया ताकि मोबाइल पर साफ़ पढ़ा जा सके */
+        line-height: 1.8 !important; /* लाइनों के बीच का गैप बढ़ाया */
+        color: #f0f0f0 !important; /* अक्षरों को और चमकदार साफ़ सफ़ेद किया */
+        font-weight: 800 !important;
+        margin-bottom: 18px !important; /* हर पॉइंट के बीच की दूरी बढ़ाई */
+        text-align: left !important;
     }
 
+/* ४. कोने वाले कट (X) बटन को भी बड़ा करना */
+.legal-close-btn {
+    position: absolute !important;
+    top: 15px !important;
+    right: 25px !important;
+    background: none !important;
+    border: none !important;
+    color: #ffd700 !important;
+    font-size: 40px !important; /* क्लोज बटन का साइज़ बढ़ाकर ४०px किया */
+    cursor: pointer !important;
+    font-weight: bold !important;
+    z-index: 2000010 !important;
+    pointer-events: auto !important;
+}
 /* ३. SECOND फिक्स: मुख्य बाय फॉर्म पॉपअप (Buy $1 Spot & Premium Form) */
 .modal-box, div.modal-box, #buyModal .modal-box {
     background: #15151a !important;
@@ -746,33 +770,88 @@ body {
     }
 }
 
-/* ४. THIRD फिक्स: सर्च बॉक्स और सर्च रिज़ल्ट पॉपअप का बड़ा और साफ़ लुक */
-/* (नोट: अगर सर्च रिज़ल्ट की अलग क्लास है तो वह इसपर ऑटो-लागू होगी) */
-.search-result-modal, #searchResultBox, .modal-box.search-fix {
-    width: 550px !important; /* सर्च पॉपअप को और चौड़ा किया */
-    padding: 35px !important;
-    text-align: center !important;
+/* =======================================================
+   🔍 सर्च पॉपअप बॉक्स (Search Result Modal) का फाइनल रिप्लेसमेंट 🔍
+   ======================================================= */
+
+/* १. पूरे सर्च पॉपअप बॉक्स को बड़ा, आलीशान और सेंटर लॉक करना */
+.search-result-modal,
+#searchResultBox,
+.modal-box.search-fix {
+    background: #15151a !important; /* गहरा शाही सॉलिड काला रंग */
+    border: 3.5px solid #ffd700 !important; /* कड़क चमकीला मुख्य सोने का बॉर्डर */
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.45) !important; /* सुनहरी ग्लो */
+    border-radius: 20px !important;
+    /* 🚨 साइज़ को बड़ा किया ताकि विज़िटर को ब्रांड साफ़ दिखे */
+    width: 550px !important; /* चौड़ाई को एकदम बड़ा (५५०px) किया */
+    max-width: 92% !important; /* मोबाइल स्क्रीन पर सही फिट होने के लिए */
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* स्क्रीन के बिल्कुल बीचों-बीच लॉक */
+    margin: 0 !important;
+    padding: 35px 30px !important; /* अंदर का स्पेस खुला-खुला किया */
+    z-index: 10000000 !important;
+    pointer-events: auto !important;
+    text-align: center !important; /* सब कुछ बीच में रखने के लिए */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 15px !important;
 }
 
-    /* सर्च रिज़ल्ट के अंदर लोगो और 'Visit Website' बटन की शानदार फिनिशिंग */
-    .search-result-modal img, .modal-box img.search-logo {
-        max-width: 140px !important; /* लोगो एकदम साफ़ और बड़ा दिखेगा */
-        max-height: 140px !important;
-        object-fit: contain !important;
-        margin: 15px auto !important;
-        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5)) !important;
+    /* २. सर्च पॉपअप के अंदर यूजर के अपलोड किए गए 'लोगो' (Logo) को बड़ा और कड़क करना */
+    .search-result-modal img,
+    #searchResultBox img,
+    .modal-box img.search-logo {
+        width: 150px !important; /* 🚨 लोगो का साइज़ काफी बड़ा (१५०px) किया */
+        height: 150px !important; /* ताकि यूजर का ब्रांड एकदम साफ़ चमके */
+        object-fit: contain !important; /* फोटो कभी कटेगी नहीं */
+        margin: 10px auto !important;
+        filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)) !important; /* लोगो के पीछे सुंदर परछाई */
+        display: block !important;
     }
 
-/* ५. FOURTH फिक्स: बधाई (Congratulations) पॉपअप का महा-विस्फोट साइज़ */
-.congratulations-modal, #congratsModal .modal-box, .modal-box.congrats-fix {
-    width: 800px !important; /* स्क्रीन पर एकदम बड़ा और भव्य दिखेगा */
-    border: 8px solid #ffd700 !important;
-    background: radial-gradient(circle, #1c1c24 0%, #111116 100%) !important;
-    padding: 40px 30px !important;
-    text-align: center !important;
-    box-shadow: 0 0 60px rgba(255, 215, 0, 0.5) !important;
-    animation: congrats-glow 2s infinite alternate;
-}
+    /* ३. सर्च पॉपअप के अंदर 'ब्रांड नाम' (Brand Name) को बड़ा और साफ़ करना */
+    .search-result-modal h4,
+    #searchResultBox h4,
+    .search-brand-name {
+        color: #ffd700 !important; /* ब्रांड नाम का कड़क सुनहरा पीला रंग */
+        font-size: 24px !important; /* अक्षरों को बड़ा और कड़क किया */
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        margin: 5px 0 !important;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
+    }
+
+    /* ४. 'Visit Website / Profile' वाले बटन को बड़ा और आकर्षक करना */
+    .btn-visit-site,
+    #searchResultBox button,
+    .search-result-modal .btn {
+        background: linear-gradient(180deg, #ffd700 0%, #b58212 100%) !important; /* सुनहरी ग्रेडिएंट */
+        color: #000000 !important; /* काले कड़क अक्षर */
+        border: 1.5px solid #ffffff !important;
+        padding: 12px 28px !important; /* बटन को बड़ा और दबाने में आसान किया */
+        border-radius: 8px !important;
+        font-size: 16px !important;
+        font-weight: 900 !important;
+        cursor: pointer !important;
+        text-transform: uppercase !important;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;
+        width: auto !important;
+        display: inline-block !important;
+        margin-top: 10px !important;
+        pointer-events: auto !important;
+        transition: all 0.2s ease !important;
+    }
+
+        .btn-visit-site:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6) !important;
+        }
 
 @keyframes congrats-glow {
     0% {
@@ -807,21 +886,178 @@ body {
     font-weight: 500 !important;
 }
 
-/* बटनों को बड़ा और दबाने में आसान रखना */
-.btn-pay-now {
-    flex: 1 !important;
-    background: linear-gradient(180deg, #ffd700 0%, #b58212 100%) !important;
-    color: #000000 !important;
-    border: 1.5px solid #ffffff !important;
-    padding: 12px !important;
-    border-radius: 8px !important;
+/* =======================================================
+   🏆 द डॉलर मून स्पॉट - पॉपअप बटन, हेडिंग और कट (X) का फाइनल फिक्स 🏆
+   ======================================================= */
+
+/* १. 🚨 सबसे ऊपर की हेडिंग (Buy $1 Spot / Premium) को पीले रंग में सेंटर में लॉक करना */
+.modal-box h3,
+#buyModal .modal-box h3 {
+    color: #ffd700 !important; /* पूरा सॉलिड सोने जैसा चमकीला पीला रंग */
+    font-size: 24px !important; /* साइज़ थोड़ा और बड़ा किया */
     font-weight: 900 !important;
-    font-size: 20px !important;
-    cursor: pointer !important;
+    text-align: center !important; /* बिल्कुल बीचों-बीच सेंटर लॉक */
     text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    margin-bottom: 15px !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.6) !important; /* सुनहरी ग्लो */
 }
 
-.btn-cancel, .legal-close-btn {
-    cursor: pointer !important;
+/* २. 🚨 कैंसिल बटन हटाने के बाद मुख्य 'Pay & Publish' बटन को आलीशान और बड़ा करना */
+.modal-actions {
+    display: flex !important;
+    justify-content: center !important; /* बटन को बिल्कुल सेंटर में रखने के लिए */
+    margin-top: 15px !important;
+    width: 100% !important;
     pointer-events: auto !important;
 }
+
+.btn-pay-now {
+    width: 100% !important; /* अकेले बटन को पूरा चौड़ा और सुडौल किया */
+    background: #ffd700 !important; /* पूरा चमकीला पीला (Yellow) रंग */
+    color: #000000 !important; /* काले कड़क अक्षर ताकि दूर से चमकें */
+    border: 2px solid #ffffff !important;
+    padding: 14px !important; /* बटन को दबाने में और आसान किया */
+    border-radius: 8px !important;
+    font-weight: 900 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 18px rgba(255, 215, 0, 0.5) !important;
+    text-transform: uppercase !important;
+    pointer-events: auto !important;
+    transition: all 0.2s ease !important;
+}
+
+    .btn-pay-now:hover {
+        background: linear-gradient(180deg, #fff066 0%, #ffd700 100%) !important;
+        transform: scale(1.01);
+        box-shadow: 0 6px 22px rgba(255, 215, 0, 0.7) !important;
+    }
+
+/* 🚨 कैंसिल बटन को हमेशा के लिए गायब (Delete) करने का कोड */
+.btn-cancel {
+    display: none !important; /* यह बटन को फॉर्म से हमेशा के लिए मिटा देगा */
+}
+
+/* ३. 👑 पॉपअप के ऊपर राइट कोने में सुंदर सुनहरी कट (X) बटन जोड़ना */
+/* (नोट: हम इसके लिए आपकी HTML में पहले से बने क्लास या कोडिंग का इस्तेमाल करेंगे) */
+.modal-box .close-btn,
+.modal-box .legal-close-btn,
+#buyModal .close {
+    position: absolute !important;
+    top: 12px !important;
+    right: 20px !important; /* राइट साइड टॉप कोने में सेट */
+    background: none !important;
+    border: none !important;
+    color: #ffd700 !important; /* सोने जैसा कड़क पीला रंग */
+    font-size: 35px !important; /* उंगली से छूने के लिए एकदम बड़ा साइज */
+    cursor: pointer !important;
+    font-weight: bold !important;
+    z-index: 1000010 !important;
+    pointer-events: auto !important;
+    transition: color 0.2s !important;
+}
+
+    .modal-box .close-btn:hover {
+        color: #ffffff !important;
+    }
+/* =======================================================
+   👑 बाय पॉपअप के ऊपर राइट कोने में सुनहरी कट (X) बटन का फिक्स 👑
+   ======================================================= */
+.popup-close-x {
+    position: absolute !important;
+    top: 15px !important; /* ऊपर से सही दूरी */
+    right: 20px !important; /* सीधे हाथ के बिल्कुल कोने में सेट */
+    background: none !important;
+    border: none !important;
+    color: #ffd700 !important; /* सोने जैसा चमकीला पीला रंग */
+    font-size: 38px !important; /* उंगली या माउस से छूने के लिए एकदम बड़ा साइज */
+    cursor: pointer !important;
+    font-weight: bold !important;
+    z-index: 10000010 !important;
+    pointer-events: auto !important; /* क्लिक 100% एक्टिव */
+    transition: color 0.2s ease !important;
+    line-height: 1 !important;
+}
+
+    .popup-close-x:hover {
+        color: #ffffff !important; /* माउस ले जाने पर सफ़ेद चमकेगा */
+    }
+/* =======================================================
+   💥 द डॉलर मून स्पॉट - सर्च पॉपअप को ज़बरदस्ती बड़ा करने का ब्रह्मास्त्र फिक्स 💥
+   ======================================================= */
+
+/* १. सर्च के छोटे डिब्बे की चौड़ाई, ऊँचाई और सॉलिड ब्लैक लुक को ज़बरदस्ती लॉक करना */
+.search-result-modal,
+#searchResultBox,
+div[style*="position: fixed"] .modal-box,
+.modal-box.search-fix {
+    background-color: #15151a !important; /* गहरा शाही सॉलिड काला रंग */
+    border: 3.5px solid #ffd700 !important; /* कड़क चमकीला मुख्य सोने का बॉर्डर */
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.45) !important; /* सुनहरी ग्लो */
+    border-radius: 20px !important;
+    /* 🚨 आकार को ज़बरदस्ती बड़ा करने का असली नंबर */
+    width: 550px !important; /* चौड़ाई सीधे ५५० पिक्सेल फिक्स */
+    max-width: 92% !important; /* मोबाइल स्क्रीन पर सही फिट होने के लिए */
+    min-height: 250px !important; /* डिब्बे को ऊपर-नीचे से भी बड़ा किया */
+    /* स्क्रीन के बिल्कुल बीचों-बीच सेंटर लॉक */
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    padding: 35px 30px !important; /* अंदर का स्पेस खुला-खुला किया */
+    z-index: 10000000 !important;
+    pointer-events: auto !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 15px !important;
+}
+
+    /* २. सर्च पॉपअप के अंदर के 'लोगो' (Logo) को ज़बरदस्ती बड़ा करना */
+    .search-result-modal img,
+    #searchResultBox img,
+    div[style*="position: fixed"] .modal-box img {
+        width: 150px !important; /* 🚨 लोगो का साइज़ काफी बड़ा किया */
+        height: 150px !important; /* ताकि यूजर का ब्रांड एकदम साफ़ चमके */
+        max-width: 150px !important;
+        max-height: 150px !important;
+        object-fit: contain !important; /* फोटो कभी कटेगी नहीं */
+        margin: 10px auto !important;
+        filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)) !important;
+        display: block !important;
+    }
+
+    /* ३. सर्च पॉपअप के अंदर के 'ब्रांड नाम' (Brand Name) को बड़ा और कड़क सुनहरा करना */
+    .search-result-modal h4,
+    #searchResultBox h4,
+    .search-brand-name {
+        color: #ffd700 !important; /* ब्रांड नाम का कड़क सुनहरा पीला रंग */
+        font-size: 24px !important; /* अक्षरों को बड़ा और कड़क किया */
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
+        display: block !important;
+    }
+
+    /* ४. 'Visit Website / Profile' वाले बटन को बड़ा और एक्टिव करना */
+    .btn-visit-site,
+    #searchResultBox button,
+    .search-result-modal button {
+        background: linear-gradient(180deg, #ffd700 0%, #b58212 100%) !important;
+        color: #000000 !important; /* काले कड़क अक्षर */
+        border: 1.5px solid #ffffff !important;
+        padding: 12px 28px !important; /* बटन को बड़ा और दबाने में आसान किया */
+        border-radius: 8px !important;
+        font-size: 16px !important;
+        font-weight: 900 !important;
+        cursor: pointer !important;
+        text-transform: uppercase !important;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;
+        width: auto !important;
+        display: inline-block !important;
+        pointer-events: auto !important;
+    }

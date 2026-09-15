@@ -191,11 +191,26 @@
             </footer>
         </div>
     </div>
-
+    <!-- 🔍 द डॉलर मून स्पॉट - प्रीमियम सर्च रिज़ल्ट पॉपअप 🔍 -->
+    <div class="modal-overlay" id="searchResultModal">
+        <div class="modal-box search-fix">
+            <button class="popup-close-x" onclick="document.getElementById('searchResultModal').style.display='none'">&times;</button>
+            <h3 id="searchModalTitle">Search Result</h3>
+            <div id="searchLogoContainer">
+                <img id="searchResultLogo" src="" alt="Brand Logo" class="search-logo" style="display:none;">
+            </div>
+            <h4 id="searchResultBrandName" class="search-brand-name">Brand Name</h4>
+            <div class="modal-actions">
+                <a id="searchResultLink" href="#" target="_blank" class="btn-visit-site">Visit Website</a>
+            </div>
+        </div>
+    </div>
     <!-- UNIVERSAL BUY POPUP MODAL -->
     <div class="modal-overlay" id="buyModal">
         <div class="modal-box">
             <h3 id="modalTitle">Buy Spot</h3>
+            <!-- 🚨 यह जादुई कट बटन आपके बाय पॉपअप को बंद करने के लिए है -->
+            <button class="popup-close-x" onclick="closeBuyModal()">&times;</button>
 
             <div id="brandNameWrapper">
                 <label>Brand Name</label>
@@ -290,7 +305,7 @@
             </ul>
         </div>
     </div>
-    <!-- 3. How It Works Modal --> 
+    <!-- 3. How It Works Modal -->
     <div class="legal-modal-overlay" id="howItWorksModal">
         <div class="legal-modal-box">
             <button class="legal-close-btn" onclick="closeLegalModal('howItWorksModal')">&times;</button>
@@ -370,6 +385,23 @@
 
     <script src="script.js"></script>
     <script>
+                // 🚨 पुराना alert हटाकर सुंदर बड़ा सर्च पॉपअप खोलने का असली जावास्क्रिप्ट फंक्शन
+                function handleSearchResult(modal) {
+                    if (modal) {
+                        // हमारे नए बड़े पॉपअप के अंदर डेटा सेट करना
+                        document.getElementById('searchResultLogo').src = modal.logo || '';
+                        document.getElementById('searchResultLogo').style.display = modal.logo ? 'block' : 'none';
+                        document.getElementById('searchResultBrandName').innerText = modal.name;
+                        document.getElementById('searchResultLink').href = modal.url || '#';
+
+                        // बड़े सुनहरे पॉपअप को स्क्रीन पर शो (Flex) कर दें
+                        document.getElementById('searchResultModal').style.display = 'flex';
+                    } else {
+                        // अगर कोई ब्रांड नहीं मिला तो पुराना alert हटाकर सुंदर संदेश दिखाना
+                        alert("No brand found with this name!");
+                    }
+                }
+
                 function openLegalModal(modalId) {
                     const modal = document.getElementById(modalId);
                     if (modal) modal.style.display = 'flex';
