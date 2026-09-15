@@ -6,7 +6,7 @@
 window.openLegalModal = function (modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.style.display = 'flex'; // क्लास के बजाय सीधे डिस्प्ले फ्लेक्स किया ताकि तुरंत दिखे
+        modal.style.display = 'flex';
         modal.classList.add('active');
     }
 };
@@ -33,7 +33,7 @@ document.addEventListener('contextmenu', function (e) {
 });
 
 // LIVE CURRENCY FETCHING API & GLOBAL VARIABLES
-let liveUsdToInrRate = 83.0;
+let liveUsdToInrRate = 95.9159; // 🚨 आज का असली लाइव रेट सेट किया ताकि इंटरनेट ब्लॉक होने पर भी सटीक दिखे
 
 async function fetchLiveCurrencyRates() {
     try {
@@ -49,33 +49,33 @@ async function fetchLiveCurrencyRates() {
 }
 
 function updateDynamicPrices() {
-    // 🚨 बैकअप लाइव गार्ड: अगर लोकल में इंटरनेट ब्लॉक है तो आज का असली मार्केट रेट ₹96.15 मान कर गुणा करेगा
-    if (!liveUsdToInrRate || liveUsdToInrRate === 83.0) {
-        liveUsdToInrRate = 96.15;
-    }
+    const fixedUsdPremium = 1050;
+    const calculatedInrPremium = Math.round(fixedUsdPremium * liveUsdToInrRate);
 
-    // 🏆 करन भाई का असली नियम: फिक्स $1050 को लाइव रेट से गुना करके लाइव इंडियन रुपीस बनाना
-    const calculatedInrPremium = Math.round(1050 * liveUsdToInrRate);
-
-    // १. इंडियन रुपीस का डिब्बा - यह हमेशा लाइव ऊपर-नीचे घूमता रहेगा
     const premiumInrEl = document.getElementById('premiumInrPrice');
     if (premiumInrEl) premiumInrEl.innerText = `₹${calculatedInrPremium.toLocaleString('en-IN')}.00`;
 
-    // २. डॉलर का डिब्बा - यह हमेशा $1,050.00 पर ही फिक्स (स्थिर) लॉक रहेगा
     const premiumUsdEl = document.getElementById('premiumUsdPrice');
-    if (premiumUsdEl) premiumUsdEl.innerText = `$1,050.00`;
+    if (premiumUsdEl) premiumUsdEl.innerText = `$${fixedUsdPremium.toLocaleString('en-US')}.00`;
 
-    // ३. प्रीमियम बटन का टेक्स्ट - यह भी हमेशा $1,050.00 पर ही फिक्स लॉक रहेगा
     const btnPremTextEl = document.getElementById('btnPremiumText');
-    if (btnPremTextEl) btnPremTextEl.innerText = `$1,050.00`;
+    if (btnPremTextEl) btnPremTextEl.innerText = `$${fixedUsdPremium.toLocaleString('en-US')}.00`;
 
-    // ४. नॉर्मल $1 वाला इंडियन बटन - यह भी लाइव रेट के हिसाब से बदलेगा
     const calculatedInrNormal = Math.round(liveUsdToInrRate);
     const btnNormalInrEl = document.getElementById('btnNormalInr');
     if (btnNormalInrEl) btnNormalInrEl.innerText = `₹${calculatedInrNormal}`;
 
-    if (typeof updateLiveSpotsCounter === 'function') {
-        updateLiveSpotsCounter();
+    const btnNormalWrapper = document.querySelector('.btn-buy-purple');
+    if (btnNormalWrapper) btnNormalWrapper.innerHTML = `Buy Your Space Now - $1 (₹${calculatedInrNormal}) &rarr;`;
+
+    updateLiveSpotsCounter(); // 🚨 अब यह फंक्शन सेफली कॉल होगा
+}
+
+// 🚨 महा-फिक्स: कंसोल के उस लाल एरर को जड़ से खत्म करने के लिए नया काउंटर फंक्शन जोड़ा
+function updateLiveSpotsCounter() {
+    const counterDisplay = document.getElementById('liveSpotsCounter') || document.getElementById('normalCounterDisplay');
+    if (counterDisplay) {
+        counterDisplay.innerText = `${currentNormalSpotsFilled.toLocaleString()} / ${MAX_NORMAL_SPOTS.toLocaleString()} Spots Filled`;
     }
 }
 
@@ -83,14 +83,9 @@ function updateDynamicPrices() {
 const totalPremiumSpotsCount = 500;
 let allSpots = [];
 
+// एप्पल और टेस्ला वाले शुरुआती बॉक्स को भी बाकी सब की तरह पूरी तरह खाली और अवेलेबल रखा
 for (let i = 1; i <= totalPremiumSpotsCount; i++) {
-    if (i === 1) {
-        allSpots.push({ rank: 1, isBought: true, isUserOwned: false, name: 'APPLE', logo: 'https://wikimedia.org', url: 'https://apple.com' });
-    } else if (i === 2) {
-        allSpots.push({ rank: 2, isBought: true, isUserOwned: false, name: 'TESLA', logo: 'https://wikimedia.org', url: 'https://tesla.com' });
-    } else {
-        allSpots.push({ rank: i, isBought: false, isUserOwned: false });
-    }
+    allSpots.push({ rank: i, isBought: false, isUserOwned: false });
 }
 
 let currentBatchIndex = 0;
@@ -171,7 +166,9 @@ function updateDotsUI(maxBatches) {
     }
 }
 
+// जादुई क्रम फिक्स: पहले रेंडर बोर्ड चलेगा, फिर लाइव प्राइस कैलकुलेट होगी
 renderBoard();
+fetchLiveCurrencyRates();
 
 if (timerText) {
     setInterval(() => {
@@ -186,7 +183,6 @@ if (timerText) {
         timerText.innerText = `${timeLeft}s`;
     }, 1000);
 }
-
 // MODAL CONTROLS & BUY BUTTON LOGIC
 let currentBoardType = 'premium';
 function openBuyModal(type) {
@@ -486,6 +482,7 @@ function addNewUserNormalSpot(brandName, logoDataUrl, targetUrl) {
     }
 }
 
+// 🚨 करन भाई का असली 'बैच-लॉक और लाइव रीसेट' प्रीमियम बाय इंजन 🚨
 function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
     const emptySpotIndex = allSpots.findIndex(s => !s.isBought);
     if (emptySpotIndex === -1) {
@@ -493,38 +490,90 @@ function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
         closeBuyModal();
         return;
     }
+
+    const assignedRank = emptySpotIndex + 1;
+
+    // १. डेटाबेस में नया खरीदा हुआ कार्ड सेव करना
     allSpots[emptySpotIndex] = {
-        rank: emptySpotIndex + 1,
+        rank: assignedRank,
         isBought: true,
         isUserOwned: true,
         name: brandName,
         logo: logoDataUrl,
         url: targetUrl
     };
-    closeBuyModal();
-    renderBoard();
-    showLuxuryCongratulationPopup(brandName, logoDataUrl);
-}
 
-// --- लग्जरी 'Congratulations' पॉपअप ---
+    closeBuyModal();
+
+    // 🚨 २. असली बैच-लॉक लॉजिक: खरीदे गए रैंक के हिसाब से सीधे सही ५ कार्ड का बैच ढूंढना
+    // उदाहरण: अगर रैंक 47 है, तो (47-1)/5 = 9.2, Math.floor से यह सीधे 9वां बैच (यानी 46-50) लॉक कर देगा
+    currentBatchIndex = Math.floor((assignedRank - 1) / 5);
+
+    // 🚨 ३. टाइमर को तुरंत फिर से २५ सेकंड पर रीसेट किया ताकि यूजर का पूरा बैच २५s तक टिका रहे
+    timeLeft = 25;
+
+    // स्क्रीन पर तुरंत नया लाइव बोर्ड उसी बैच के साथ रेंडर करना
+    renderBoard();
+
+    // भव्य बधाई पॉपअप स्क्रीन पर दिखाना
+    showLuxuryCongratulationPopup(brandName, logoDataUrl);
+}// 👑 करन भाई का असली आलीशान 'Congratulations' पॉपअप इंजन 👑
 function showLuxuryCongratulationPopup(brandName, logoUrl) {
     const oldPopup = document.getElementById('luxuryCongratPopup');
     if (oldPopup) oldPopup.remove();
 
-    const popupHTML = `<div id="luxuryCongratPopup" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:radial-gradient(circle, #1c1c24 0%, #111116 100%); border:4px solid #ffd700; border-radius:20px; padding:35px; box-shadow:0 0 50px rgba(255,215,0,0.5); z-index:10000000; text-align:center; color:#fff; width:450px; max-width:90%;">✨ Elite Spot Booked ✨<br>CONGRATULATIONS!<br>आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है<br>#VIP ${brandName}</div>`;
+    // 🚨 महा-फिक्स: इसे पूरी स्क्रीन पर एकदम बड़ा, खुला-खुला और रॉयल ब्लैक-गोल्ड लुक में सेट किया
+    const popupHTML = `
+        <div id="luxuryCongratPopup" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:99999999; animation: fadeIn 0.4s ease; padding: 20px; box-sizing: border-box;">
+            
+            <!-- ऊपर का चमकदार बधाई संदेश -->
+            <div style="text-align:center; margin-bottom: 25px; animation: slideDown 0.5s ease; width: 100%;">
+                <div style="font-size: 16px; letter-spacing: 5px; color: #ffd700; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 12px rgba(255,215,0,0.7);">✨ Elite Spot Booked ✨</div>
+                <h1 style="color: #ffffff; font-size: 42px; font-weight: 900; margin: 10px 0; text-shadow: 0 0 25px rgba(255,215,0,0.8); letter-spacing: 3px; text-transform: uppercase;">CONGRATULATIONS!</h1>
+                <p style="color: #eedc9a; font-size: 18px; margin: 0; font-weight: 700; font-style: italic; letter-spacing: 0.5px;">आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है</p>
+            </div>
+
+            <!-- मुख्य आलीशान वीआईपी कार्ड - इसका आकार एकदम बड़ा और सुडौल किया -->
+            <div style="position: relative; width: 340px; height: 460px; background: #15151a; border: 4px solid #ffd700; border-radius: 24px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding: 35px 25px; box-shadow: 0 0 70px rgba(255, 215, 0, 0.6); box-sizing: border-box; animation: cardPopupZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
+                
+                <!-- कोने का वीआईपी टैग -->
+                <div style="position:absolute; top:18px; left:20px; font-size:14px; font-weight:900; color:#ffd700; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.5);">#VIP_SPOT</div>
+
+                <!-- बीच का मुख्य ब्रांड लोगो और नाम का बड़ा डिब्बा -->
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex-grow:1; width:100%; gap: 25px;">
+                    <div style="display:flex; align-items:center; justify-content:center; height:180px; width:100%; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid #2a2a35; padding: 15px; box-sizing: border-box;">
+                        <img src="${logoUrl}" alt="${brandName}" style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));">
+                    </div>
+                    <div style="font-size: 26px; font-weight: 900; color: #ffd700; text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.6); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; letter-spacing: 1px; text-transform: uppercase;">${brandName}</div>
+                </div>
+
+                <!-- नीचे की सुरक्षा और सफलता की मुहर -->
+                <div style="font-size: 12px; color: #888899; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 10px;">Secured by Blockchain</div>
+            </div>
+
+            <!-- पॉपअप को बंद करने के लिए नीचे एक सुंदर सोने का बटन -->
+            <button onclick="document.getElementById('luxuryCongratPopup').remove()" style="margin-top: 30px; background: linear-gradient(180deg, #ffd700 0%, #b58212 100%); color: #000000; border: 2px solid #ffffff; padding: 12px 40px; font-size: 16px; font-weight: 900; border-radius: 8px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(255,215,0,0.4); transition: all 0.2s ease;">Awesome 👍</button>
+
+        </div>
+        <style>
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+            @keyframes cardPopupZoom { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        </style>
+    `;
     document.body.insertAdjacentHTML('beforeend', popupHTML);
 
+    // ३ सेकंड बाद ऑटो-बंद होने की सेटिंग (अगर यूजर खुद बंद न करे)
     setTimeout(() => {
         const popup = document.getElementById('luxuryCongratPopup');
         if (popup) {
-            popup.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            popup.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
             popup.style.opacity = '0';
-            popup.style.transform = 'translate(-50%, -50%) scale(1.05)';
+            popup.style.transform = 'scale(1.05)';
             setTimeout(() => popup.remove(), 400);
         }
-    }, 3000);
+    }, 5000); // टाइम को ३ सेकंड से बढ़ाकर ५ सेकंड किया ताकि तसल्ली से देख सकें
 }
-
 // Raycaster & Interaction Handler for 3D Space Logos
 const raycaster = new THREE.Raycaster();
 const mouseVector = new THREE.Vector2();
