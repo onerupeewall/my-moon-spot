@@ -517,42 +517,36 @@ function addNewUserPremiumSpot(brandName, logoDataUrl, targetUrl) {
 
     // भव्य बधाई पॉपअप स्क्रीन पर दिखाना
     showLuxuryCongratulationPopup(brandName, logoDataUrl);
-}// 👑 करन भाई का असली आलीशान 'Congratulations' पॉपअप इंजन 👑
+}// 👑 करन भाई का असली मुख्य प्रीमियम कार्ड वाला ३-सेकंड ऑटो पॉपअप इंजन 👑
 function showLuxuryCongratulationPopup(brandName, logoUrl) {
     const oldPopup = document.getElementById('luxuryCongratPopup');
     if (oldPopup) oldPopup.remove();
 
-    // 🚨 महा-फिक्स: इसे पूरी स्क्रीन पर एकदम बड़ा, खुला-खुला और रॉयल ब्लैक-गोल्ड लुक में सेट किया
+    // 🚨 महा-फिक्स: पूरा बैकग्राउंड और बटन साफ़, सीधे आपका असली चमचमाता सुनहरी प्रीमियम कार्ड ही पॉपअप बनेगा
     const popupHTML = `
-        <div id="luxuryCongratPopup" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:99999999; animation: fadeIn 0.4s ease; padding: 20px; box-sizing: border-box;">
+        <div id="luxuryCongratPopup" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:99999999; animation: fadeIn 0.4s ease; padding: 20px; box-sizing: border-box;">
             
-            <!-- ऊपर का चमकदार बधाई संदेश -->
+            <!-- ऊपर का संदेश बिल्कुल साफ़ और चमकदार -->
             <div style="text-align:center; margin-bottom: 25px; animation: slideDown 0.5s ease; width: 100%;">
-                <div style="font-size: 16px; letter-spacing: 5px; color: #ffd700; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 12px rgba(255,215,0,0.7);">✨ Elite Spot Booked ✨</div>
-                <h1 style="color: #ffffff; font-size: 42px; font-weight: 900; margin: 10px 0; text-shadow: 0 0 25px rgba(255,215,0,0.8); letter-spacing: 3px; text-transform: uppercase;">CONGRATULATIONS!</h1>
-                <p style="color: #eedc9a; font-size: 18px; margin: 0; font-weight: 700; font-style: italic; letter-spacing: 0.5px;">आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है</p>
+                <div style="font-size: 15px; letter-spacing: 5px; color: #ffd700; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 12px rgba(255,215,0,0.7);">✨ Elite Spot Booked ✨</div>
+                <h1 style="color: #ffffff; font-size: 40px; font-weight: 900; margin: 10px 0; text-shadow: 0 0 25px rgba(255,215,0,0.8); letter-spacing: 3px; text-transform: uppercase;">CONGRATULATIONS!</h1>
+                <p style="color: #eedc9a; font-size: 16px; margin: 0; font-weight: 700; font-style: italic; letter-spacing: 0.5px;">आपका प्रीमियम स्पॉट बोर्ड पर लाइव हो गया है</p>
             </div>
 
-            <!-- मुख्य आलीशान वीआईपी कार्ड - इसका आकार एकदम बड़ा और सुडौल किया -->
-            <div style="position: relative; width: 340px; height: 460px; background: #15151a; border: 4px solid #ffd700; border-radius: 24px; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding: 35px 25px; box-shadow: 0 0 70px rgba(255, 215, 0, 0.6); box-sizing: border-box; animation: cardPopupZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
+            <!-- 🏆 आपका मुख्य असली प्रीमियम कार्ड (Pillar Card) - हूबहू वैसा ही जैसा मुख्य वेबसाइट पर है -->
+            <div style="position: relative; width: 300px; height: 400px; background: linear-gradient(135deg, #FBF4DB 0%, #EEDC9A 50%, #D4BE75 100%); border: 2.5px solid #ffd700; border-radius: 12px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 15px 10px; box-shadow: 0 0 50px rgba(255, 215, 0, 0.6); box-sizing: border-box; animation: cardPopupZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
                 
-                <!-- कोने का वीआईपी टैग -->
-                <div style="position:absolute; top:18px; left:20px; font-size:14px; font-weight:900; color:#ffd700; letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,215,0,0.5);">#VIP_SPOT</div>
+                <!-- कोने का छोटा #VIP रैंक नंबर -->
+                <div style="position:absolute; top:8px; left:10px; font-size:11px; font-weight:bold; color:#776622;">#VIP</div>
 
-                <!-- बीच का मुख्य ब्रांड लोगो और नाम का बड़ा डिब्बा -->
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex-grow:1; width:100%; gap: 25px;">
-                    <div style="display:flex; align-items:center; justify-content:center; height:180px; width:100%; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid #2a2a35; padding: 15px; box-sizing: border-box;">
-                        <img src="${logoUrl}" alt="${brandName}" style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));">
+                <!-- बीच का मुख्य ब्रांड लोगो और नाम (बिना किसी इनर बैकग्राउंड के, सीधे कड़क लुक) -->
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex-grow:1; width:100%;">
+                    <div style="display:flex; align-items:center; justify-content:center; height:200px; margin-bottom:12px; width:100%;">
+                        <img src="${logoUrl}" alt="${brandName}" style="max-width:200px; max-height:200px; width:auto; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));">
                     </div>
-                    <div style="font-size: 26px; font-weight: 900; color: #ffd700; text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.6); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; letter-spacing: 1px; text-transform: uppercase;">${brandName}</div>
+                    <div style="font-size:25px; font-weight:900; color:#000000; text-shadow: 0px 1px 2px rgba(255, 215, 0, 0.8), 0px 0px 8px rgba(255, 235, 150, 0.6); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; text-transform: uppercase;">${brandName}</div>
                 </div>
-
-                <!-- नीचे की सुरक्षा और सफलता की मुहर -->
-                <div style="font-size: 12px; color: #888899; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 10px;">Secured by Blockchain</div>
             </div>
-
-            <!-- पॉपअप को बंद करने के लिए नीचे एक सुंदर सोने का बटन -->
-            <button onclick="document.getElementById('luxuryCongratPopup').remove()" style="margin-top: 30px; background: linear-gradient(180deg, #ffd700 0%, #b58212 100%); color: #000000; border: 2px solid #ffffff; padding: 12px 40px; font-size: 16px; font-weight: 900; border-radius: 8px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(255,215,0,0.4); transition: all 0.2s ease;">Awesome 👍</button>
 
         </div>
         <style>
@@ -563,16 +557,16 @@ function showLuxuryCongratulationPopup(brandName, logoUrl) {
     `;
     document.body.insertAdjacentHTML('beforeend', popupHTML);
 
-    // ३ सेकंड बाद ऑटो-बंद होने की सेटिंग (अगर यूजर खुद बंद न करे)
+    // 🚨 ३ सेकंड बाद ऑटोमेटिक बिना किसी बटन के बंद होने का टाइमर फिक्स
     setTimeout(() => {
         const popup = document.getElementById('luxuryCongratPopup');
         if (popup) {
-            popup.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            popup.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             popup.style.opacity = '0';
-            popup.style.transform = 'scale(1.05)';
+            popup.style.transform = 'scale(0.9)';
             setTimeout(() => popup.remove(), 400);
         }
-    }, 5000); // टाइम को ३ सेकंड से बढ़ाकर ५ सेकंड किया ताकि तसल्ली से देख सकें
+    }, 3000); // पूरे ३ सेकंड (3000ms) पर लॉक किया भाई
 }
 // Raycaster & Interaction Handler for 3D Space Logos
 const raycaster = new THREE.Raycaster();
@@ -636,3 +630,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+/* =======================================================
+   🔒 करन भाई का कीबोर्ड और माउस व्हील ज़ूम लॉकिंग सिस्टम 🔒
+   ======================================================= */
+// १. कीबोर्ड के Ctrl और (+ / - / 0) बटन को ब्लॉक करना
+document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && (e.key === '=' || e.key === '-' || e.key === '+' || e.key === '0')) {
+        e.preventDefault();
+    }
+});
+
+// २. माउस व्हील के साथ Ctrl दबाकर ज़ूम करना ब्लॉक करना
+document.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+// ३. मोबाइल पर डबल टैप (Double Tap) करने से होने वाले ऑटो-ज़ूम को रोकना
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (e) {
+    let now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+    }
+    lastTouchEnd = now;
+}, false);
