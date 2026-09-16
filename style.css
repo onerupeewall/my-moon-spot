@@ -1271,3 +1271,45 @@ div[id*="Modal"] {
         transform: none !important;
         box-shadow: 0 0 50px rgba(255, 215, 0, 0.5) !important; /* डिब्बे के चारों तरफ सुनहरी चमक */
     }
+/* =======================================================
+   🏆 करन भाई का यूनिवर्सल ऑल-पॉपअप सेंटर लॉकिंग इंजन 🏆
+   ======================================================= */
+
+/* १. सर्च और लीगल के सभी बाहरी पर्दों को ज़बरदस्ती स्क्रीन के बिल्कुल बीचों-बीच (Center) लॉक करना */
+.legal-modal-overlay,
+.modal-overlay,
+#searchResultModal,
+#buyModal {
+    display: none; /* शुरू में छुपा रहेगा */
+    align-items: center !important; /* 🚨 जादुई फिक्स: ऊपर-नीचे से बिल्कुल बीच में */
+    justify-content: center !important; /* 🚨 जादुई फिक्स: दाएं-बाएं से बिल्कुल बीच में */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999999 !important;
+    box-sizing: border-box !important;
+}
+
+    /* २. जब भी कोई पर्दा एक्टिव (Flex) हो, तो उसे ज़बरदस्ती सेंटर एलाइनमेंट देना */
+    .legal-modal-overlay.active,
+    .modal-overlay[style*="flex"],
+    #searchResultModal[style*="flex"],
+    #buyModal[style*="flex"] {
+        display: flex !important;
+    }
+
+    /* ३. सर्च रिज़ल्ट और सभी लीगल डिब्बों के पुराने टेढ़े-मेढ़े मार्जिन को जड़ से साफ़ करके परफेक्ट सेंटर में जकड़ना */
+    .legal-modal-box,
+    .modal-box,
+    .modal-content,
+    #searchResultModal > div,
+    #buyModal > div {
+        margin: 0 auto !important; /* पुराना सारा लटकने वाला मार्जिन हमेशा के लिए ख़त्म */
+        top: 0 !important;
+        left: 0 !important;
+        position: relative !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+    }
