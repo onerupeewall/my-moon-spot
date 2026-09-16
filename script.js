@@ -656,3 +656,34 @@ document.addEventListener('touchend', function (e) {
     }
     lastTouchEnd = now;
 }, false);
+/* =======================================================
+   🏆 करन भाई का जादुई जावास्क्रिप्ट ऑटो-वेबसाइट मोड फिक्स 🏆
+   ======================================================= */
+function forceDesktopModeOnMobile() {
+    // १. चेक करना कि क्या यूजर मोबाइल या टैबलेट पर वेबसाइट खोल रहा है
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // २. मोबाइल की स्क्रीन की असली चौड़ाई मापना
+        const screenWidth = window.screen.width;
+        const targetWidth = 1200; // हमारी असली डेस्कटॉप वेबसाइट का साइज
+
+        // ३. जादुई गणित: स्क्रीन के हिसाब से कितना ज़ूम-आउट करना है (जैसे 360/1200 = 0.3)
+        const scale = screenWidth / targetWidth;
+
+        // ४. ज़बरदस्ती ब्राउज़र के सिर पर बंदूक रखकर पूरे पेज को स्क्रीन में ऑटो-फिट करना
+        let metaViewport = document.querySelector('meta[name="viewport"]');
+        if (!metaViewport) {
+            metaViewport = document.createElement('meta');
+            metaViewport.name = "viewport";
+            document.head.appendChild(metaViewport);
+        }
+
+        // ५. स्केल को ज़बरदस्ती सेट करना और यूजर का ज़ूम लॉक करना
+        metaViewport.setAttribute('content', `width=${targetWidth}, initial-scale=${scale}, minimum-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
+    }
+}
+
+// वेबसाइट के लोड होते ही और स्क्रीन घूमने (Rotate) पर तुरंत यह जादू चालू करें
+window.addEventListener('DOMContentLoaded', forceDesktopModeOnMobile);
+window.addEventListener('resize', forceDesktopModeOnMobile);
