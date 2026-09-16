@@ -692,3 +692,53 @@ function lockAndStretchFullMobileScreen() {
 window.addEventListener('DOMContentLoaded', lockAndStretchFullMobileScreen);
 window.addEventListener('load', lockAndStretchFullMobileScreen);
 window.addEventListener('resize', lockAndStretchFullMobileScreen);
+/* =======================================================
+   🔒 करन भाई का यूनिवर्सल जावास्क्रिप्ट ऑल-पॉपअप सेंटर लॉकर 🔒
+   ======================================================= */
+function forceAllModalsToCenter() {
+    // १. वेबसाइट के सभी पॉपअप पर्दों और अंदर के डिब्बों को ढूंढना
+    const overlays = document.querySelectorAll('.legal-modal-overlay, .modal-overlay, #searchResultModal, #buyModal');
+    const boxes = document.querySelectorAll('.legal-modal-box, .modal-box, .modal-content, #searchResultModal > div, #buyModal > div');
+
+    // २. सभी बाहरी पर्दों पर ज़बरदस्ती रॉयल ब्लैक-ब्लर और सेंटर का ताला जड़ना
+    overlays.forEach(overlay => {
+        if (overlay) {
+            overlay.style.setProperty('align-items', 'center', 'important');
+            overlay.style.setProperty('justify-content', 'center', 'important');
+            overlay.style.setProperty('position', 'fixed', 'important');
+            overlay.style.setProperty('top', '0', 'important');
+            overlay.style.setProperty('left', '0', 'important');
+            overlay.style.setProperty('width', '100vw', 'important');
+            overlay.style.setProperty('height', '100vh', 'important');
+            overlay.style.setProperty('background', 'rgba(0, 0, 0, 0.90)', 'important');
+            overlay.style.setProperty('backdrop-filter', 'blur(12px)', 'important');
+            overlay.style.setProperty('-webkit-backdrop-filter', 'blur(12px)', 'important');
+        }
+    });
+
+    // ३. सभी अंदर के डिब्बों के पुराने मार्जिन को साफ करके बिल्कुल सुडौल बीच में रोकना
+    boxes.forEach(box => {
+        if (box) {
+            box.style.setProperty('margin', '0 auto', 'important');
+            box.style.setProperty('top', '0', 'important');
+            box.style.setProperty('left', '0', 'important');
+            box.style.setProperty('position', 'relative', 'important');
+            box.style.setProperty('transform', 'none', 'important');
+            box.style.setProperty('box-shadow', '0 0 50px rgba(255, 215, 0, 0.5)', 'important');
+        }
+    });
+
+    // ४. सर्च रिज़ल्ट का महा-फिक्स: ब्रांड नेम को वापस बिल्कुल बीच में लाना
+    const searchBrandText = document.getElementById('searchResultBrandName');
+    if (searchBrandText) {
+        searchBrandText.style.setProperty('text-align', 'center', 'important');
+        searchBrandText.style.setProperty('width', '100%', 'important');
+        searchBrandText.style.setProperty('display', 'block', 'important');
+    }
+}
+
+// वेबसाइट पर कहीं भी क्लिक होने पर या कोई भी बटन दबाने पर यह जादुई सेंटर लॉक तुरंत काम करेगा
+document.addEventListener('click', () => {
+    setTimeout(forceAllModalsToCenter, 50);
+});
+window.addEventListener('resize', forceAllModalsToCenter);
