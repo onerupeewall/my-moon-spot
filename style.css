@@ -1313,3 +1313,64 @@ div[id*="Modal"] {
         transform: none !important;
         box-sizing: border-box !important;
     }
+/* =======================================================
+   🏆 करन भाई का बुलेटप्रूफ ऑल-पॉपअप 100% सेंटर-लॉकिंग इंजन 🏆
+   ======================================================= */
+
+/* १. सभी पर्दों को ज़बरदस्ती स्क्रीन के बिल्कुल बीचों-बीच (Center) लॉक करना */
+.legal-modal-overlay,
+.modal-overlay,
+#searchResultModal,
+#buyModal,
+div[id*="Modal"] {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.90) !important; /* शाही गहरा काला पर्दा */
+    backdrop-filter: blur(12px) !important; /* आलीशान धुंधला इफ़ेक्ट */
+    -webkit-backdrop-filter: blur(12px) !important;
+    z-index: 99999999 !important;
+    /* 🚨 असली जादुई फिक्स: इसे टॉप के बजाय ज़बरदस्ती स्क्रीन के बिल्कुल बीचों-बीच लॉक किया */
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
+
+    /* २. जब जावास्क्रिप्ट पॉपअप को खोले, तब उसे ज़बरदस्ती फ्लेक्स मोड में एक्टिव रखना */
+    .legal-modal-overlay.active,
+    .modal-overlay[style*="flex"],
+    .modal-overlay[style*="block"],
+    #searchResultModal[style*="flex"],
+    #searchResultModal[style*="block"],
+    #buyModal[style*="flex"],
+    #buyModal[style*="block"] {
+        display: flex !important;
+    }
+
+    /* ३. सभी डिब्बों के पुराने टेढ़े-मेढ़े मार्जिन को जड़ से साफ़ करके परफेक्ट सेंटर में चमकाना */
+    .legal-modal-box,
+    .modal-box,
+    .modal-content,
+    #searchResultModal > div,
+    #buyModal > div,
+    div[class*="modal-box"] {
+        margin: 0 auto !important; /* पुराना सारा लटकने वाला मार्जिन हमेशा के लिए ख़त्म */
+        top: 0 !important;
+        left: 0 !important;
+        position: relative !important;
+        transform: none !important;
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.5) !important; /* सुनहरी वीआईपी चमक */
+        box-sizing: border-box !important;
+    }
+
+    /* ४. 🚨 सर्च रिज़ल्ट का महा-फिक्स: ब्रांड नेम को वापस बिल्कुल बीच (Center) में लाने का नियम */
+    #searchResultBrandName,
+    #searchResultModal h3,
+    #searchResultModal div {
+        text-align: center !important; /* लेफ्ट से हटाकर सीधे बीच में सेट किया */
+        justify-content: center !important;
+        align-items: center !important;
+    }
