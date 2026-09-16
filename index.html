@@ -211,7 +211,9 @@
     <!-- UNIVERSAL BUY POPUP MODAL -->
     <div class="modal-overlay" id="buyModal">
         <!-- 🚨 इस डिब्बे को ज़बरदस्ती टॉप-सेंटर पर फिक्स किया -->
-        <div class="modal-box" style="margin-top: 0 !important; top: 0 !important; transform: none !important;">
+        <!-- 🚨 इसे ज़बरदस्ती ऊपर की दीवार से ४५px नीचे सुंदर गैप में लॉक किया -->
+        <!-- 🚨 इसे ज़बरदस्ती लैपटॉप और मोबाइल स्क्रीन के बिल्कुल परफेक्ट बीचों-बीच (Center) लॉक किया -->
+        <div class="modal-box" style="margin: 0 auto !important; position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; box-shadow: 0 0 50px rgba(255, 215, 0, 0.6) !important;">
             <h3 id="modalTitle">Buy Spot</h3>
             <!-- 🚨 यह जादुई कट बटन आपके बाय पॉपअप को बंद करने के लिए है -->
             <button class="popup-close-x" onclick="closeBuyModal()">&times;</button>

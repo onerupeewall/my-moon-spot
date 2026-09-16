@@ -655,27 +655,34 @@ body {
         z-index: 100010 !important;
         pointer-events: auto !important;
     }
-/* =======================================================
-   🏆 द डॉलर मून स्पॉट - ऑल पॉपअप ऑटो-मैनेज मास्टर फिक्स 🏆
-   ======================================================= */
 
-/* १. सभी पॉपअप के पीछे का गहरा ब्लैक पर्दा और ब्लर इफ़ेक्ट */
-.modal-overlay,
-.legal-modal-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(0, 0, 0, 0.88) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    display: none;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 9999999 !important;
-    padding: 15px !important;
+
+/* १. यह नियम पक्का करेगा कि पॉपअप शुरू में छुपा रहे और सिर्फ एक्टिव होने पर ही दिखे */
+.modal-overlay, #buyModal {
+    display: none !important;
 }
+
+    /* २. जब जावास्क्रिप्ट पॉपअप को खोले, तब उसे ज़बरदस्ती ऊपर से ४५px नीचे सुंदर गैप में दिखाए */
+    .modal-overlay[style*="flex"],
+    .modal-overlay[style*="block"],
+    #buyModal[style*="flex"],
+    #buyModal[style*="block"],
+    .modal-overlay.active {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        padding-top: 45px !important;
+        box-sizing: border-box !important;
+        z-index: 999999 !important;
+    }
+
+    /* ३. पॉपअप के अंदर के सुनहरे डिब्बे को दीवार से चिपकने से रोकना */
+    .modal-box, #buyModal > div {
+        margin-top: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        position: relative !important;
+    }}
 
 /* =======================================================
    🛡️ लीगल पॉपअप बॉक्स (Header & Footer Modals) का फाइनल रिप्लेसमेंट 🛡️
@@ -688,7 +695,7 @@ body {
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
     border-radius: 20px !important;
     /* 🚨 चौड़ाई और ऊँचाई को बहुत बड़ा और खुला किया ताकि मोबाइल पर दूर से दिखे */
-    width: 1800px !important; /* चौड़ाई ८००px की */
+    width: 1500px !important; /* चौड़ाई ८००px की */
     max-width: 95% !important; /* मोबाइल स्क्रीन के दोनों कोनों तक फैलेगा */
     height: 80vh !important; /* ऊँचाई को एकदम फिक्स बड़ा (८०%) किया */
     max-height: 80vh !important;
@@ -702,7 +709,7 @@ body {
     /* २. लीगल पॉपअप की मुख्य हेडिंग को बड़ा और कड़क करना */
     .legal-modal-box h2 {
         color: #ffd700 !important;
-        font-size: 30px !important; /* हेडिंग को ३०px किया */
+        font-size: 20px !important; /* हेडिंग को ३०px किया */
         font-weight: 900 !important;
         text-transform: uppercase !important;
         border-bottom: 2px solid #ffd700 !important;
@@ -713,11 +720,11 @@ body {
 
     /* ३. 🚨 अंदर लिखे सारे पॉइंट्स (अक्षरों) को बड़ा और साफ़ करना */
     .legal-modal-box li {
-        font-size: 30px !important; /* फोंट साइज़ को बढ़ाकर १९px किया ताकि मोबाइल पर साफ़ पढ़ा जा सके */
+        font-size: 21px !important; /* फोंट साइज़ को बढ़ाकर १९px किया ताकि मोबाइल पर साफ़ पढ़ा जा सके */
         line-height: 1.8 !important; /* लाइनों के बीच का गैप बढ़ाया */
         color: #f0f0f0 !important; /* अक्षरों को और चमकदार साफ़ सफ़ेद किया */
         font-weight: 800 !important;
-        margin-bottom: 18px !important; /* हर पॉइंट के बीच की दूरी बढ़ाई */
+        margin-bottom: 16px !important; /* हर पॉइंट के बीच की दूरी बढ़ाई */
         text-align: left !important;
     }
 
@@ -983,9 +990,6 @@ body {
     .popup-close-x:hover {
         color: #ffffff !important; /* माउस ले जाने पर सफ़ेद चमकेगा */
     }
-/* =======================================================
-   💥 द डॉलर मून स्पॉट - सर्च पॉपअप को ज़बरदस्ती बड़ा करने का ब्रह्मास्त्र फिक्स 💥
-   ======================================================= */
 
 /* १. सर्च के छोटे डिब्बे की चौड़ाई, ऊँचाई और सॉलिड ब्लैक लुक को ज़बरदस्ती लॉक करना */
 .search-result-modal,
@@ -1178,3 +1182,92 @@ button:active,
         opacity: 1;
     }
 }
+/* =======================================================
+   👑 करन भाई का असली रॉयल ब्लैक-ब्लर और टॉप-सेंटर इंजन 👑
+   ======================================================= */
+
+/* १. पॉपअप के पीछे वाले पूरे पर्दे को एकदम गहरा काला और आलीशान धुंधला (Blur) करना */
+.modal-overlay,
+#buyModal,
+div[id*="Modal"] {
+    background: rgba(0, 0, 0, 0.88) !important; /* गहरा शाही काला पर्दा */
+    backdrop-filter: blur(12px) !important; /* आईफोन जैसा आलीशान धुंधला इफ़ेक्ट */
+    -webkit-backdrop-filter: blur(12px) !important;
+    display: none; /* शुरू में छुपा रहेगा, जावास्क्रिप्ट से खुलेगा */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999999 !important;
+}
+
+    /* २. जब जावास्क्रिप्ट पॉपअप को खोले, तब उसे ज़बरदस्ती टॉप-सेंटर पर फिक्स करना */
+    .modal-overlay[style*="flex"],
+    .modal-overlay[style*="block"],
+    #buyModal[style*="flex"],
+    #buyModal[style*="block"],
+    .modal-overlay.active {
+        display: flex !important;
+        align-items: flex-start !important; /* टॉप से शुरू होगा */
+        justify-content: center !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ३. अंदर के मुख्य सुनहरे बॉक्स को दीवार से ४५px नीचे एकदम आलीशान लुक में जकड़ना */
+    .modal-box,
+    .modal-content,
+    .modal-body,
+    .legal-modal-box,
+    #buyModal > div {
+        margin-top: 45px !important; /* ऊपर की दीवार से ४५px का सुंदर वीआईपी गैप */
+        margin-bottom: 45px !important; /* नीचे से भी सेफ गैप */
+        top: 0 !important; /* पुरानी आड़ी-तिरछी पोजीशन लॉक */
+        position: relative !important;
+        transform: none !important;
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important; /* डिब्बे के चारों तरफ सुनहरी चमक */
+    }
+/* =======================================================
+   👑 करन भाई का यूनिवर्सल 100% परफेक्ट सेंटर-लॉकिंग इंजन 👑
+   ======================================================= */
+
+/* १. पॉपअप के पीछे वाले पूरे पर्दे को गहरा शाही काला, आलीशान धुंधला करना और बिल्कुल बीच (Center) में सेट करना */
+.modal-overlay,
+#buyModal,
+div[id*="Modal"] {
+    background: rgba(0, 0, 0, 0.88) !important; /* गहरा शाही काला पर्दा */
+    backdrop-filter: blur(12px) !important; /* आईफोन जैसा आलीशान धुंधला इफ़ेक्ट */
+    -webkit-backdrop-filter: blur(12px) !important;
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999999 !important;
+    /* 🚨 जादुई फिक्स: इसे टॉप के बजाय ज़बरदस्ती स्क्रीन के बिल्कुल बीचों-बीच (Center) लॉक किया */
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+    /* २. जब जावास्क्रिप्ट पॉपअप को खोले, तब उसे ज़बरदस्ती फ्लेक्स मोड में एक्टिव करना */
+    .modal-overlay[style*="flex"],
+    .modal-overlay[style*="block"],
+    #buyModal[style*="flex"],
+    #buyModal[style*="block"],
+    .modal-overlay.active {
+        display: flex !important;
+    }
+
+    /* ३. अंदर के मुख्य सुनहरे बॉक्स को बिना किसी आड़े-तिरछे मार्जिन के बिल्कुल सटीक बीच में चमकाना */
+    .modal-box,
+    .modal-content,
+    .modal-body,
+    .legal-modal-box,
+    #buyModal > div {
+        margin: 0 auto !important; /* पुराना सारा मार्जिन साफ, एकदम सुडौल सेंटर फिक्स */
+        top: 0 !important;
+        position: relative !important;
+        transform: none !important;
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.5) !important; /* डिब्बे के चारों तरफ सुनहरी चमक */
+    }
