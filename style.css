@@ -1080,3 +1080,32 @@ div[style*="position: fixed"] .modal-box,
         max-width: 100% !important;
     }
 }
+/* =======================================================
+   💥 करन भाई का यूनिवर्सल स्क्रीन ऑटो-फिट फाइनल फिक्स 💥
+   ======================================================= */
+@media screen and (max-width: 768px) {
+    /* १. मोबाइल स्क्रीन पर आते ही पूरी वेबसाइट को जबरदस्ती १००% चौड़ाई में खींचना */
+    html, body {
+        width: 100% !important;
+        min-width: 100% !important;
+        overflow-x: hidden !important; /* साइड का स्क्रॉल बार बंद */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* २. मुख्य आउटर कंटेनर या रैपर को मोबाइल स्क्रीन की पूरी चौड़ाई में फैलाना */
+    .main-wrapper, .container, .wrapper, main, #app {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ३. ३D स्पेस वाले डिब्बे को दोनों किनारों से एकदम चिपका देना */
+    #pixelBoardGrid,
+    #pixelBoardGrid canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+    }
+}
