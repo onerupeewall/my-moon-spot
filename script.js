@@ -657,33 +657,38 @@ document.addEventListener('touchend', function (e) {
     lastTouchEnd = now;
 }, false);
 /* =======================================================
-   🏆 करन भाई का जादुई जावास्क्रिप्ट ऑटो-वेबसाइट मोड फिक्स 🏆
+   🔒 करन भाई का यूनिवर्सल स्क्रीन ऑटो-फ़िट लॉकिंग इंजन 🔒
    ======================================================= */
-function forceDesktopModeOnMobile() {
-    // १. चेक करना कि क्या यूजर मोबाइल या टैबलेट पर वेबसाइट खोल रहा है
+function lockAndStretchFullMobileScreen() {
+    // १. चेक करना कि क्या यूज़र मोबाइल या टैबलेट पर है
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     if (isMobile) {
-        // २. मोबाइल की स्क्रीन की असली चौड़ाई मापना
-        const screenWidth = window.screen.width;
-        const targetWidth = 1200; // हमारी असली डेस्कटॉप वेबसाइट का साइज
+        // २. मोबाइल की स्क्रीन की असली उपलब्ध चौड़ाई और ऊँचाई नापना
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
 
-        // ३. जादुई गणित: स्क्रीन के हिसाब से कितना ज़ूम-आउट करना है (जैसे 360/1200 = 0.3)
-        const scale = screenWidth / targetWidth;
+        // ३. हमारे मुख्य रैपर या बॉडी एलिमेंट को टारगेट करना
+        // (अगर आपकी मुख्य क्लास का नाम अलग है तो यहाँ बॉडी पर सीधे जादू चलेगा)
+        const targetEl = document.body;
 
-        // ४. ज़बरदस्ती ब्राउज़र के सिर पर बंदूक रखकर पूरे पेज को स्क्रीन में ऑटो-फिट करना
-        let metaViewport = document.querySelector('meta[name="viewport"]');
-        if (!metaViewport) {
-            metaViewport = document.createElement('meta');
-            metaViewport.name = "viewport";
-            document.head.appendChild(metaViewport);
+        if (targetEl) {
+            // ४. हमारी १२box की वेबसाइट को मोबाइल स्क्रीन की चौड़ाई में ज़बरदस्ती खींचने का गणित
+            const scaleX = windowWidth / 1200;
+
+            // ५. पेज को बिना कटे, बिना किनारों पर खाली जगह छोड़े १००% स्क्रीन पर फैलाना
+            targetEl.style.width = "1200px";
+            targetEl.style.transform = `scale(${scaleX})`;
+            targetEl.style.transformOrigin = "top center";
+            targetEl.style.margin = "0 auto";
+
+            // ६. नीचे का जो ब्लैक स्पेस खाली रह जाता है, उसे ऊँचाई के हिसाब से बैलेंस करना
+            document.documentElement.style.overflowX = "hidden";
         }
-
-        // ५. स्केल को ज़बरदस्ती सेट करना और यूजर का ज़ूम लॉक करना
-        metaViewport.setAttribute('content', `width=${targetWidth}, initial-scale=${scale}, minimum-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
     }
 }
 
-// वेबसाइट के लोड होते ही और स्क्रीन घूमने (Rotate) पर तुरंत यह जादू चालू करें
-window.addEventListener('DOMContentLoaded', forceDesktopModeOnMobile);
-window.addEventListener('resize', forceDesktopModeOnMobile);
+// वेबसाइट लोड होते ही और फोन घुमाने (Resize) पर तुरंत स्क्रीन को फिट करें
+window.addEventListener('DOMContentLoaded', lockAndStretchFullMobileScreen);
+window.addEventListener('load', lockAndStretchFullMobileScreen);
+window.addEventListener('resize', lockAndStretchFullMobileScreen);
