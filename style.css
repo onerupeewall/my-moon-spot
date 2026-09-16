@@ -1109,3 +1109,21 @@ div[style*="position: fixed"] .modal-box,
         min-width: 100% !important;
     }
 }
+/* =======================================================
+   🔒 करन भाई का यूनिवर्सल स्क्रॉल लॉकिंग सिस्टम (Page Lock) 🔒
+   ======================================================= */
+html, body {
+    overflow: hidden !important; /* ऊपर-नीचे और दाएं-बाएं का सारा स्क्रॉल परमानेंट बंद */
+    height: 100% !important; /* स्क्रीन की लंबाई को मोबाइल फ्रेम में लॉक किया */
+    max-height: 100% !important;
+    position: fixed !important; /* पेज को अपनी जगह पत्थर की लकीर की तरह फिक्स किया */
+    width: 100% !important;
+    touch-action: none !important; /* मोबाइल पर उंगली से स्क्रीन खिसकाने का मोशन सुन्न किया */
+}
+
+/* अगर मुख्य आउटर कंटेनर में कोई स्क्रॉल बचा हो तो उसे भी साफ़ करना */
+.main-wrapper, .container, main, #app {
+    overflow: hidden !important;
+    height: 100% !important;
+    max-height: 100% !important;
+}
