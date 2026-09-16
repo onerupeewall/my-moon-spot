@@ -196,7 +196,8 @@
     </div>
     <!-- 🔍 द डॉलर मून स्पॉट - प्रीमियम सर्च रिज़ल्ट पॉपअप 🔍 -->
     <div class="modal-overlay" id="searchResultModal">
-        <div class="modal-box search-fix">
+        <!-- 🚨 सर्च रिज़ल्ट को ज़बरदस्ती स्क्रीन के बिल्कुल परफेक्ट बीचों-बीच (Center) लॉक किया -->
+        <div class="modal-box" style="margin: 0 auto !important; position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; box-shadow: 0 0 50px rgba(255, 215, 0, 0.6) !important;">
             <button class="popup-close-x" onclick="document.getElementById('searchResultModal').style.display='none'">&times;</button>
             <h3 id="searchModalTitle">Search Result</h3>
             <div id="searchLogoContainer">
@@ -296,7 +297,8 @@
             <button class="legal-close-btn" onclick="closeLegalModal('navPremiumModal')">&times;</button>
             <h2>Premium Board</h2>
             <ul>
-                <li>Welcome to the ultimate VIP digital stage where only elite brands and winners stand out.</li>
+                <!-- 🚨 प्रीमियम बोर्ड पॉपअप को ज़बरदस्ती बिल्कुल परफेक्ट बीचों-बीच (Center) लॉक किया -->
+                <div class="legal-modal-box" style="margin: 0 auto !important; position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; box-shadow: 0 0 50px rgba(255, 215, 0, 0.6) !important;">
                 <li>Your brand logo sits proudly inside a shining, high-value gold frame designed for maximum impact.</li>
                 <li>Capture instant attention from global visitors and skyrocket your credibility overnight.</li>
                 <li>With only 500 exclusive slots available, this is the rarest real estate on the web.</li>
