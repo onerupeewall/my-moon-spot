@@ -1061,3 +1061,22 @@ div[style*="position: fixed"] .modal-box,
         display: inline-block !important;
         pointer-events: auto !important;
     }
+/* =======================================================
+   👑 करन भाई का यूनिवर्सल मोबाइल स्क्रीन ऑटो-फिट फिक्स 👑
+   ======================================================= */
+@media screen and (max-width: 768px) {
+    /* १. पूरे मुख्य कंटेनर को मोबाइल की स्क्रीन के हिसाब से १००% खींचना */
+    body, .main-wrapper, .container {
+        width: 100vw !important;
+        min-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* २. ३D स्पेस वाले डिब्बे को भी स्क्रीन की पूरी चौड़ाई में फैलाना */
+    #pixelBoardGrid,
+    #pixelBoardGrid canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
