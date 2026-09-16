@@ -1127,3 +1127,54 @@ html, body {
     height: 100% !important;
     max-height: 100% !important;
 }
+/* =======================================================
+   🏆 करन भाई का पॉपअप पोजीशन और क्लिक कलर मास्टर फिक्स 🏆
+   ======================================================= */
+
+/* १. पूरे स्क्रीन पर हर बटन और लिंक का क्लिक करने पर नीला (Blue) होना हमेशा के लिए बंद */
+* {
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+}
+
+/* २. बटन या लिंक पर क्लिक करते समय टेक्स्ट का कलर चमकीला पीला (Gold/Yellow) करना */
+a:active,
+button:active,
+.btn-buy-gold:active,
+.btn-buy-purple:active,
+#spaceSearchBtn:active {
+    color: #ffd700 !important;
+    text-shadow: 0 0 8px #ffd700 !important;
+}
+
+/* ३. पॉपअप बॉक्स को ज़बरदस्ती टॉप-सेंटर (Top Centre) पर लाने का सही फिक्स */
+.legal-modal-overlay.active,
+.modal-overlay[style*="flex"],
+.modal-overlay[style*="block"],
+#buyModal[style*="flex"] {
+    display: flex !important;
+    align-items: flex-start !important; /* टॉप से शुरू होगा */
+    justify-content: center !important;
+    padding-top: 40px !important; /* टॉप से सुंदर गैप */
+    overflow-y: auto !important; /* मोबाइल पर फॉर्म पूरा दिखे */
+}
+
+/* पॉपअप के अंदर के डिब्बे का मार्जिन और एनिमेशन */
+.modal-box,
+#buyModal > div,
+.legal-modal-box {
+    margin-top: 0 !important;
+    animation: popupSlideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+@keyframes popupSlideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
